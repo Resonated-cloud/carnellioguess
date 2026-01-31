@@ -110,7 +110,7 @@ let intervalId2;
 function timerloop(){ intervalId = setInterval(timedisplay, 1000);
 } 
 function timedisplay(){
-if (timer === 1){
+if (timer <= 1){
 clearInterval(intervalId);
 final();
 }
@@ -220,6 +220,7 @@ else if (phase == 4){
 	currentCombo = comboname[randomKey];
 	if (currentCombo.includes("EF")){
 		EvilFracture();
+		timerP += 8;
 	}
 }
 
@@ -229,12 +230,13 @@ else if (phase == 4){
 		document.getElementById("timerstatus").textContent = "";
 		return;
 	}
-if (timer === 1){
+if (timer <= 1){
 clearInterval(intervalId4);
 }
 timer--;
 document.getElementById("timer").textContent = timer;
-document.getElementById("timerstatus").textContent = "Fractured Time! (2x Speed)";
+document.getElementById("timerstatus").style.color = "#5d00ff";
+document.getElementById("timerstatus").textContent = " Fractured Time! (2x Speed)";
 }
 
 ///
@@ -519,6 +521,7 @@ imgcombo(currentCombo);
 
 
 </script>
+
 
 
 

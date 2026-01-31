@@ -9,7 +9,7 @@
 <div id = "imgattack">
 </div>
 <p>What's this attack called?</p>
-<p id="timer">15</p>
+<p id="timerlabel"><span id = "timer">15</span><span>"timerstatus"</span></p>
 </center>
 <p id="lifecounter">Life: <span id="life1">5</span> / <span id="life2">5</span><span id="lifenews"></span><span id="statuseffect"></span></p> 
 <center>
@@ -95,7 +95,7 @@ let guess = [];
 const p1Combos = {A : ["SS", "Decap"], B : ["VV", "Decap"], C : ["Fakeout", "SS"], D : ["Fakeout", "TR"], E : ["Dash", "WF"], F : ["WF", "Dash"]};
 const p2Combos = {A : ["SV", "DR"], B: ["SS", "SV", "DS"], C: ["DS", "VV"], D: ["VV", "SF"], E: ["Fakeout", "DS"], F : ["DR", "DS"], G: ["TR", "Decap"], H: ["SF", "TR"], I: ["Dash", "SF"], J: ["Dash", "SF", "WF"]};
 const p3Combos = {A : ["Summon", "SS", "Romeida", "SV", "DS"], B: ["Summon", "Mawaru", "Redirect", "BD"], C: ["Summon", "SF", "Mawaru", "DS"], D: ["Summon", "Mawaru", "Romeida", "VV"], E: ["VV", "Dash", "SS", "DS"], F: ["SS", "SV", "DR", "DS"], G: ["Summon", "SF", "Mawaru", "Redirect", "BD"], H: ["Summon", "SF", "Redirect", "BD"], I: ["Summon", "Mawaru", "Redirect", "Romeida"], J: ["Dash", "DR", "SV", "DS"], K: ["SF", "DR", "DS", "Fakeout"]};
-const p4Combos = {A : ["SS", "SV", "DR", "SV", "DS"]}
+const p4Combos = {A : ["SS", "SV", "DR", "SV", "DS", "EF"]}
 const p4Initials = {A : ["Dash", "Fakeout", "VV", "Summon", "Mawaru", "Redirect", "DB", "ES", "SR"]}
 let ans = 0;
 ///
@@ -106,31 +106,7 @@ let atk = document.getElementById("atk").textContent;
 let timer = document.getElementById("timer").textContent;
 let intervalId;
 let intervalId2;
-function randomCombo() {
-let comboname;
-if (phase == 1){
-const keys = Object.keys(p1Combos); 
-	comboname = p1Combos;
-}
-else if (phase == 2){
-        comboname = p2Combos;
-}
-else if (phase == 3){
-        comboname = p3Combos;
-}
-else if (phase == 4){
-	comboname = p4Combos;
-	timerP = 16;
-	if (p4initial !== "done"){
-	timerP = 21;
-	comboname = p4Initials;
-	p4initial = "done";
-	}
-}
-	const keys = Object.keys(comboname); 
-	const randomKey = keys[Math.floor(Math.random() * keys.length)];
-	currentCombo = comboname[randomKey];
-}
+
 function timerloop(){ intervalId = setInterval(timedisplay, 1000);
 } 
 function timedisplay(){
@@ -144,6 +120,25 @@ document.getElementById("timer").textContent = timer;
 timerloop();
 
 /// special attacks ///
+function EvilFracture (){
+	intervalId4 = setInterval(timefracturing, 1000);
+} 
+function timefracturing(){
+	if(guess.includes("EF")||!currentCombo.includes("EF"){
+		clearInterval(intervalId4);
+		document.getElementById("timerstatus").textContent = "";
+		return;
+	}
+if (timer === 1){
+clearInterval(intervalId4);
+}
+timer--;
+document.getElementById("timer").textContent = timer;
+document.getElementById("timerstatus").textContent = "Fractured Time! (2x Speed)";
+}
+
+
+}
 function ShadowRiposte (){
 counter = true;
 dialogue.textContent = "Without a trace...";
@@ -211,6 +206,34 @@ lifecounter.style.color = "#000000"
 statuseffect.textContent = ""; //////////// MAKE SURE TO CHANGE THIS SO IT CAN WORK WITH OTHER EFFECTS
 }
 
+}
+function randomCombo() {
+let comboname;
+if (phase == 1){
+const keys = Object.keys(p1Combos); 
+	comboname = p1Combos;
+}
+else if (phase == 2){
+        comboname = p2Combos;
+}
+else if (phase == 3){
+        comboname = p3Combos;
+}
+else if (phase == 4){
+	comboname = p4Combos;
+	timerP = 16;
+	if (p4initial !== "done"){
+	timerP = 21;
+	comboname = p4Initials;
+	p4initial = "done";
+	}
+}
+	const keys = Object.keys(comboname); 
+	const randomKey = keys[Math.floor(Math.random() * keys.length)];
+	currentCombo = comboname[randomKey];
+	if currentCombo.includes("EF"){
+		EvilFracture();
+	}
 }
 ///
 function attack(name, code){
@@ -494,5 +517,6 @@ imgcombo(currentCombo);
 
 
 </script>
+
 
 

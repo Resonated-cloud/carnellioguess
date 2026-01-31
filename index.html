@@ -218,7 +218,7 @@ else if (phase == 4){
 	const keys = Object.keys(comboname); 
 	const randomKey = keys[Math.floor(Math.random() * keys.length)];
 	currentCombo = comboname[randomKey];
-	if currentCombo.includes("EF"){
+	if (currentCombo.includes("EF")){
 		EvilFracture();
 	}
 }
@@ -519,6 +519,7 @@ imgcombo(currentCombo);
 
 
 </script>
+
 
 
 

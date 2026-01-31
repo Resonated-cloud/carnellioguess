@@ -9,7 +9,7 @@
 <div id = "imgattack">
 </div>
 <p>What's this attack called?</p>
-<p id="timerlabel"><span id = "timer">15</span><span>"timerstatus"</span></p>
+<p id="timerlabel"><span id = "timer">15</span><span id="timerstatus"></span></p>
 </center>
 <p id="lifecounter">Life: <span id="life1">5</span> / <span id="life2">5</span><span id="lifenews"></span><span id="statuseffect"></span></p> 
 <center>
@@ -124,7 +124,7 @@ function EvilFracture (){
 	intervalId4 = setInterval(timefracturing, 1000);
 } 
 function timefracturing(){
-	if(guess.includes("EF")||!currentCombo.includes("EF"){
+	if(guess.includes("EF")||!currentCombo.includes("EF")){
 		clearInterval(intervalId4);
 		document.getElementById("timerstatus").textContent = "";
 		return;
@@ -517,6 +517,7 @@ imgcombo(currentCombo);
 
 
 </script>
+
 
 
 

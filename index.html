@@ -123,19 +123,7 @@ timerloop();
 function EvilFracture (){
 	intervalId4 = setInterval(timefracturing, 1000);
 } 
-function timefracturing(){
-	if(guess.includes("EF")||!currentCombo.includes("EF")){
-		clearInterval(intervalId4);
-		document.getElementById("timerstatus").textContent = "";
-		return;
-	}
-if (timer === 1){
-clearInterval(intervalId4);
-}
-timer--;
-document.getElementById("timer").textContent = timer;
-document.getElementById("timerstatus").textContent = "Fractured Time! (2x Speed)";
-}
+
 
 
 function ShadowRiposte (){
@@ -234,6 +222,21 @@ else if (phase == 4){
 		EvilFracture();
 	}
 }
+
+	function timefracturing(){
+	if(guess.includes("EF")||!currentCombo.includes("EF")){
+		clearInterval(intervalId4);
+		document.getElementById("timerstatus").textContent = "";
+		return;
+	}
+if (timer === 1){
+clearInterval(intervalId4);
+}
+timer--;
+document.getElementById("timer").textContent = timer;
+document.getElementById("timerstatus").textContent = "Fractured Time! (2x Speed)";
+}
+
 ///
 function attack(name, code){
 if (state == "stop") {
@@ -516,6 +519,7 @@ imgcombo(currentCombo);
 
 
 </script>
+
 
 
 

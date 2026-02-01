@@ -110,7 +110,7 @@ let intervalId2;
 function timerloop(){ intervalId = setInterval(timedisplay, 1000);
 } 
 function timedisplay(){
-if (timer <= 10){
+if (timer <= 1){
 clearInterval(intervalId);
 final();
 }
@@ -333,7 +333,7 @@ function wait (){intervalId2 = setInterval(imgs, intervalP);}
 function imgs(){
 let atkname = combo[i];
 const newImg = document.createElement('img');
-if (i >= currentCombo.length){
+if (i > currentCombo.length){
 clearInterval(intervalId2);
 }
 if (atkname == "SS"){
@@ -432,7 +432,7 @@ function reset(){
 state = "right";
 document.getElementById("imgattack").innerHTML = '';
 timer = timerP;
-if (currentCombo.includes("SR")) {timer += 4;}
+if (currentCombo.includes("SR")) {timer += 40;}
 timerloop();
 }
 
@@ -520,6 +520,7 @@ imgcombo(currentCombo);
 
 
 </script>
+
 
 
 

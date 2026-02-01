@@ -214,11 +214,11 @@ function EveningShade(){
 	}
 if (ESpara % 2 == 1){
 	ESFarstate = true;
-	ESlabel.textContent = " 'Dawn's Strike' - Combos are locked to far combos for " + ESduration+" combos";
+	ESlabel.textContent = "  'Dawn's Strike' - Combos are locked to far combos for " + ESduration+" combos";
 }
 else{
 	ESNearstate = true;
-	ESlabel.textContent = " 'Dusk's Assault' - Combos are locked to near combos for " + ESduration+" combos";
+	ESlabel.textContent = "  'Dusk's Assault' - Combos are locked to near combos for " + ESduration+" combos";
 	}
 	ESduration--;
 }
@@ -249,10 +249,12 @@ else if (phase == 4){
 	let Ckeys = Object.keys(comboname); 
 	const half = Math.ceil(Ckeys.length / 2);
 	if (ESFarstate == true){
-		Ckeys =Ckeys.slice(0, half);
+		Ckeys = Ckeys.slice(0, half);
+		console.log(Ckeys);
 	}
 	else if (ESNearstate == true){
-		Ckeys =Ckeys.slice(half, Ckeys.length);
+		Ckeys = Ckeys.slice(half, Ckeys.length);
+		console.log(Ckeys);
 	}
 	const randomKey = Ckeys[Math.floor(Math.random() * Ckeys.length)];
 	currentCombo = comboname[randomKey];
@@ -559,6 +561,7 @@ imgcombo(currentCombo);
 
 
 </script>
+
 
 
 

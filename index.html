@@ -9,7 +9,7 @@
 <div id = "imgattack">
 </div>
 <p>What's this attack called?</p>
-<p id="timerlabel"><span id = "timer">160</span><span id="timerstatus"></span></p>
+<p id="timerlabel"><span id = "timer">160</span><span id="timerstatus"></span><span id="ES"></span></p>
 </center>
 <p id="lifecounter">Life: <span id="life1">5</span> / <span id="life2">5</span><span id="lifenews"></span><span id="statuseffect"></span></p> 
 <center>
@@ -79,6 +79,13 @@ let dialogue = document.getElementById("dialogue");
 let health = document.getElementById("health");
 let healthval = health.textContent;
 
+	
+let ESlabel = document.getElementById("ES");
+let ESFarstate = false;
+let ESNearstate = false;
+let ESpara = 1;
+let ESduration = 0;
+	
 let phase = 1;
 let state = "right";
 
@@ -123,7 +130,6 @@ timerloop();
 function EvilFracture (){
 	intervalId4 = setInterval(timefracturing, 100);
 } 
-
 
 
 function ShadowRiposte (){
@@ -194,6 +200,29 @@ statuseffect.textContent = ""; //////////// MAKE SURE TO CHANGE THIS SO IT CAN W
 }
 
 }
+
+function EveningShade(){
+	if (currentCombo.includes("ES")){
+	ESduration = 3;
+	ESpara++;
+	}
+	else if (ESduration == 0){
+	ESNearstate = false;
+	ESFarstate = false;
+	ESlabel.textContent = "";
+	return;
+	}
+if (ESpara % 2 = 0){
+	ESFarstate = true;
+	ESlabel.textContent = " 'Dawn's Strike' - Combos are locked to far combos for " + ESduration+" combos";
+}
+else{
+	ESNearstate = true;
+	ESlabel.textContent = " 'Dusk's Assault' - Combos are locked to near combos for " + ESduration+" combos";
+	}
+	ESduration--;
+}
+	
 function randomCombo() {
 let comboname;
 if (phase == 1){
@@ -215,7 +244,17 @@ else if (phase == 4){
 	p4initial = "done";
 	}
 }
+	
+		EveningShade();
+	
 	const keys = Object.keys(comboname); 
+	const half = Math.floor(keys.length / 2);
+	if (ESfarstate = true){
+		const keys=keys.slice(0, half);
+	}
+	else if (ESnearstate = true){
+		const keys=keys.slice(half, keys.length);
+	}
 	const randomKey = keys[Math.floor(Math.random() * keys.length)];
 	currentCombo = comboname[randomKey];
 	if (currentCombo.includes("EF")){
@@ -430,6 +469,7 @@ imgcombo(currentCombo); ////testing
 
 function reset(){
 state = "right";
+document.getElementById("timerstatus").textContent = ""
 document.getElementById("imgattack").innerHTML = '';
 timer = timerP;
 if (currentCombo.includes("SR")) {timer += 40;}
@@ -520,6 +560,7 @@ imgcombo(currentCombo);
 
 
 </script>
+
 
 
 

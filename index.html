@@ -67,7 +67,7 @@ let lifelost = 0;
 let venom = 0;
 let burnduration = 0;
 
-let timerP = 16;
+let timerP = 160;
 let phasechange2;
 let phasechange3;
 let phasechange4;
@@ -110,18 +110,18 @@ let intervalId2;
 function timerloop(){ intervalId = setInterval(timedisplay, 1000);
 } 
 function timedisplay(){
-if (timer <= 1){
+if (timer <= 10){
 clearInterval(intervalId);
 final();
 }
-timer--;
-document.getElementById("timer").textContent = timer;
+timer -= 10;
+document.getElementById("timer").textContent = timer/10;
 }
 timerloop();
 
 /// special attacks ///
 function EvilFracture (){
-	intervalId4 = setInterval(timefracturing, 200);
+	intervalId4 = setInterval(timefracturing, 100);
 } 
 
 
@@ -208,9 +208,9 @@ else if (phase == 3){
 }
 else if (phase == 4){
 	comboname = p4Combos;
-	timerP = 16;
+	timerP = 160;
 	if (p4initial !== "done"){
-	timerP = 21;
+	timerP = 210;
 	comboname = p4Initials;
 	p4initial = "done";
 	}
@@ -220,7 +220,7 @@ else if (phase == 4){
 	currentCombo = comboname[randomKey];
 	if (currentCombo.includes("EF")){
 		EvilFracture();
-		timerP += 4;
+		timerP += 40;
 	}
 }
 
@@ -230,10 +230,10 @@ else if (phase == 4){
 		document.getElementById("timerstatus").textContent = "";
 		return;
 	}
-if (timer <= 1){
+if (timer <= 10){
 clearInterval(intervalId4);
 }
-timer -= 0.2;
+timer -= 1;
 document.getElementById("timer").textContent = timer.toFixed(1);
 document.getElementById("timerstatus").style.color = "#5d00ff";
 document.getElementById("timerstatus").textContent = " Fractured Time! (2x Speed)";
@@ -320,7 +320,7 @@ lifelost += 1;
 lnumber = lnumber - lifelost;
 lifenumber.textContent = lnumber;
 }
-timer = 4;
+timer = 40;
 state = "stop";
 lifelost = 0;
 }
@@ -441,7 +441,7 @@ function nextphase(){
 phase += 1;
 if (phase == 2){
 phasechange2 = "done";
-timerP = 12;
+timerP = 120;
 intervalP = 200;
 dialogue.textContent = "Black Magic.";
 setTimeout(function(){ dialogue.textContent = "";
@@ -454,7 +454,7 @@ document.getElementById("phase2text").style.display = "inline-block";
 }
 if (phase == 3){
 phasechange3 = "done";
-timerP = 16;
+timerP = 160;
 intervalP = 200;
 dialogue.textContent = "Sorcerer's Ancestry...";
 setTimeout(function(){dialogue.textContent = "Dragonborn.";
@@ -472,7 +472,7 @@ document.getElementById("phase3text").style.display = "inline-block";
 
 if (phase == 4){
 phasechange4 = "done";
-timerP = 16;
+timerP = 160;
 intervalP = 200;
 dialogue.textContent = "...Insignificant.";
 setTimeout(function(){dialogue.textContent = "Pest.";
@@ -521,6 +521,7 @@ imgcombo(currentCombo);
 
 
 </script>
+
 
 
 

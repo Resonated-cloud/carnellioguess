@@ -13,7 +13,7 @@
 </center>
 <p id="lifecounter">Life: <span id="life1">5</span> / <span id="life2">5</span><span id="lifenews"></span><span id="statuseffect"></span></p> 
 <center>
-<p id="confirm">Current combo: <span id="ES"></span></p>
+<p id="confirm">Current combo: <span id="ESl"></span></p>
 <div id="answer">
 <p id="atk" style="color: #5d00ff;"> </p>
 </div>
@@ -81,7 +81,7 @@ let health = document.getElementById("health");
 let healthval = health.textContent;
 
 	
-let ESlabel = document.getElementById("ES");
+let ESlabel = document.getElementById("ESlu");
 let ESFarstate = false;
 let ESNearstate = false;
 let ESpara = 2;
@@ -486,7 +486,7 @@ phase += 1;
 if (phase == 2){
 phasechange2 = "done";
 timerP = 120;
-intervalP = 200;
+intervalP = 500;
 dialogue.textContent = "Black Magic.";
 setTimeout(function(){ dialogue.textContent = "";
 }, 3000)
@@ -565,6 +565,7 @@ imgcombo(currentCombo);
 
 
 </script>
+
 
 
 

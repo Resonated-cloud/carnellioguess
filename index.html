@@ -234,7 +234,7 @@ if (timer <= 1){
 clearInterval(intervalId4);
 }
 timer -= 0.2;
-document.getElementById("timer").textContent = timer;
+document.getElementById("timer").textContent = Math.floor(timer);
 document.getElementById("timerstatus").style.color = "#5d00ff";
 document.getElementById("timerstatus").textContent = " Fractured Time! (2x Speed)";
 }
@@ -521,6 +521,7 @@ imgcombo(currentCombo);
 
 
 </script>
+
 
 
 

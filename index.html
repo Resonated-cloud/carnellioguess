@@ -245,19 +245,18 @@ else if (phase == 4){
 	}
 }
 	
-	EveningShade();
 	
-	const keys = Object.keys(comboname); 
+	let Ckeys = Object.keys(comboname); 
 	const half = Math.ceiling(keys.length / 2);
 	if (ESfarstate == true){
-		const keys=keys.slice(0, half);
+		Ckeys =keys.slice(0, half);
 	}
 	else if (ESnearstate == true){
-		const keys=keys.slice(half, keys.length);
+		Ckeys =keys.slice(half, keys.length);
 	}
-	const randomKey = keys[Math.floor(Math.random() * keys.length)];
+	const randomKey = Ckeys[Math.floor(Math.random() * keys.length)];
 	currentCombo = comboname[randomKey];
-	if (currentCombo.includes("EF")){
+		EveningShade();
 		EvilFracture();
 		timerP += 40;
 	}
@@ -560,6 +559,7 @@ imgcombo(currentCombo);
 
 
 </script>
+
 
 
 

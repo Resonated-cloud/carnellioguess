@@ -121,7 +121,7 @@ timerloop();
 
 /// special attacks ///
 function EvilFracture (){
-	intervalId4 = setInterval(timefracturing, 1000);
+	intervalId4 = setInterval(timefracturing, 100);
 } 
 
 
@@ -233,7 +233,7 @@ else if (phase == 4){
 if (timer <= 1){
 clearInterval(intervalId4);
 }
-timer--;
+timer -= 0.1;
 document.getElementById("timer").textContent = timer;
 document.getElementById("timerstatus").style.color = "#5d00ff";
 document.getElementById("timerstatus").textContent = " Fractured Time! (2x Speed)";
@@ -521,6 +521,7 @@ imgcombo(currentCombo);
 
 
 </script>
+
 
 
 

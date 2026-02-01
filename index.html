@@ -83,7 +83,7 @@ let healthval = health.textContent;
 let ESlabel = document.getElementById("ES");
 let ESFarstate = false;
 let ESNearstate = false;
-let ESpara = 0;
+let ESpara = 2;
 let ESduration = 0;
 	
 let phase = 1;
@@ -213,10 +213,12 @@ function EveningShade(){
 	return;
 	}
 if (ESpara % 2 == 1){
+	ESNearstate = false;
 	ESFarstate = true;
 	ESlabel.textContent = " 'Dawn's Strike' - Combos are locked to far combos for " + ESduration+" combos";
 }
 else{
+	ESFarstate = false;
 	ESNearstate = true;
 	ESlabel.textContent = "  'Dusk's Assault' - Combos are locked to near combos for " + ESduration+" combos";
 	}
@@ -561,6 +563,7 @@ imgcombo(currentCombo);
 
 
 </script>
+
 
 
 

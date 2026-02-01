@@ -212,7 +212,7 @@ function EveningShade(){
 	ESlabel.textContent = "";
 	return;
 	}
-if (ESpara % 2 = 0){
+if (ESpara % 2 == 1){
 	ESFarstate = true;
 	ESlabel.textContent = " 'Dawn's Strike' - Combos are locked to far combos for " + ESduration+" combos";
 }
@@ -245,14 +245,14 @@ else if (phase == 4){
 	}
 }
 	
-		EveningShade();
+	EveningShade();
 	
 	const keys = Object.keys(comboname); 
-	const half = Math.floor(keys.length / 2);
-	if (ESfarstate = true){
+	const half = Math.ceiling(keys.length / 2);
+	if (ESfarstate == true){
 		const keys=keys.slice(0, half);
 	}
-	else if (ESnearstate = true){
+	else if (ESnearstate == true){
 		const keys=keys.slice(half, keys.length);
 	}
 	const randomKey = keys[Math.floor(Math.random() * keys.length)];
@@ -560,6 +560,7 @@ imgcombo(currentCombo);
 
 
 </script>
+
 
 
 

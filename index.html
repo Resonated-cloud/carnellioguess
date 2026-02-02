@@ -17,6 +17,7 @@
     <h2 id="EFTitle">Popup Title</h2>
     <p id="EFText">Popup content goes here</p>
 <p id="EFText2"><span id="progress">10</span>/10</p>
+<p id="EFText2">Timer Remaining: <span id="EFtimer"></span></p>
 
     <button onclick="EFQTE()">Break</button>
   </div>
@@ -205,6 +206,7 @@ EFClick += 1
 document.getElementById("progress").textContent = 10 - EFClick;
 if(EFClick == 10){
  document.getElementById("EFOverlay").style.display = "none";
+document.getElementById("progress").textContent = 10; // refresh
 }
 }
 function timefracturing() {
@@ -213,15 +215,16 @@ function timefracturing() {
 		document.getElementById("timerstatus").textContent = "";
 		return;
 	}
-document.getElementById("EFTitle").textContent = "Time Fractured!";
- document.getElementById("EFText").textContent = "SPAM 10 TIMES TO CLEAR REPAIR THE TIME!";
- document.getElementById("EFOverlay").style.display = "flex";
+document.getElementById("EFTitle").textContent = "Fractured Time! (2x Speed)";
+document.getElementById("EFText").textContent = "SPAM 10 TIMES TO CLEAR REPAIR THE TIME!";
+document.getElementById("EFOverlay").style.display = "flex";
 if (timer <= 10){
 clearInterval(intervalId4);
  document.getElementById("EFOverlay").style.display = "none";
 }
 timer -= 1;
 document.getElementById("timer").textContent = timer/10;
+document.getElementById("EFtimer").textContent = timer/10;
 document.getElementById("timerstatus").style.color = "#5d00ff";
 document.getElementById("timerstatus").textContent = " Fractured Time! (2x Speed)";
 }
@@ -245,6 +248,7 @@ lnumber -= 2;
 lifenumber.textContent = lnumber;
 lifenews.style.color = "#5d00c8";
 lifenews.textContent = " Counterattacked! (-2 lives)";
+SRcd = false;
 }, 1500);
 setTimeout(function() {
 lifenews.textContent = "";
@@ -392,6 +396,10 @@ function check(){
 console.log("guess:", JSON.stringify(guess));
 console.log("current:", JSON.stringify(currentCombo));
 if (state == "stop"){
+return;
+}
+if (counter == true){
+Counterattack();
 return;
 }
 ans = 1;

@@ -1,6 +1,27 @@
 <!DOCTYPE HTML>
 <title>hi</title>
 <center>
+<div id="popupOverlay" class="overlay" style="display:none;">
+  <!-- Popup box -->
+  <div class="popup">
+    <h2 id="popupTitle">Popup Title</h2>
+    <p id="popupText">Popup content goes here</p>
+
+    <button onclick="closePopup()">Close</button>
+  </div>
+</div>
+
+<div id="EFOverlay" class="overlay" style="display:none;">
+  <!-- Popup box -->
+  <div class="popup">
+    <h2 id="EFTitle">Popup Title</h2>
+    <p id="EFText">Popup content goes here</p>
+<p id="EFText2"><span id="progress">10</span>/10</p>
+
+    <button onclick="EFQTE()">Break</button>
+  </div>
+</div>
+
 <h1>guess carnellio combo thing</h1>
 <h2>BOSS : Carnellio</h2>
 <p id=healthbar>Health : <span id = "health">12550000</span><br>
@@ -9,7 +30,7 @@
 <div id = "imgattack">
 </div>
 <p>What's this attack called?</p>
-<p id="timerlabel"><span id = "timer">1</span><span id="timerstatus"></span></p> 
+<p id="timerlabel"><span id = "timer">150</span><span id="timerstatus"></span></p> 
 </center>
 <p id="lifecounter">Life: <span id="life1">5</span> / <span id="life2">5</span><span id="lifenews"></span><span id="statuseffect"></span></p> 
 <center>
@@ -22,6 +43,7 @@
 <button id = "Backspace" onclick="backspace()">Backspace</button>
 <button id = "clear" onclick="clearcombo()">Clear All</button>
 <button id = "phasetest" onclick="damagecarn(1640000)">Phase 2 damage thing</button>
+<button id = "phasetest" onclick="EvilFracture(true)">EF Qte</button>
 <br></br>
 <button id ="SS" onclick="attack('Sweeping Seize', 'SS')">Sweeping Seize</button>
 <button id ="Decap" onclick="attack('Decapitate', 'Decap')">Decapitate</button>
@@ -48,6 +70,46 @@
 <button id ="ES" style="display: none"; onclick="attack('Evening Shade', 'ES')">Evening Shade</button>
 <button id ="SR" style="display: none; color:"#5d00c8"; onclick="attack('Shadow Riposte', 'SR')">Shadow Riposte</button>
 <button id ="EF" style="display: none"; onclick="attack('Evil Fracture', 'EF')">Evil Fracture</button>
+
+<style>
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.popup {
+  background: #111;
+  color: #fff;
+  padding: 20px;
+  width: 300px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 20px #5d00ff;
+
+}
+
+.popup button {
+  margin-top: 15px;
+  padding: 8px 14px;
+  background: #5d00ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.popup button:hover {
+  background: #7a2cff;
+}
+</style>
 </html>
 
 
@@ -86,6 +148,8 @@ let ESFarstate = false;
 let ESNearstate = false;
 let ESpara = 2;
 let ESduration = 0;
+
+let EFClick = 0;
 	
 let phase = 1;
 let state = "right";
@@ -102,7 +166,7 @@ let guess = [];
 /// p1 combos
 const p1Combos = {A : ["SS", "Decap"], B : ["VV", "Decap"], C : ["Fakeout", "SS"], D : ["Fakeout", "TR"], E : ["Dash", "WF"], F : ["WF", "Dash"]};
 const p2Combos = {A : ["SV", "DR"], B: ["SS", "SV", "DS"], C: ["DS", "VV"], D: ["VV", "SF"], E: ["Fakeout", "DS"], F : ["DR", "DS"], G: ["TR", "Decap"], H: ["SF", "TR"], I: ["Dash", "SF"], J: ["Dash", "SF", "WF"]};
-const p3Combos = {A : ["Summon", "SS", "Romeida", "SV", "DS"], B: ["Summon", "Mawaru", "Redirect", "BD"], C: ["Summon", "SF", "Mawaru", "DS"], D: ["Summon", "Mawaru", "Romeida", "VV"], E: ["VV", "Dash", "SS", "DS"], F: ["SS", "SV", "DR", "DS"], G: ["Summon", "SF", "Mawaru", "Redirect", "BD"], H: ["Summon", "SF", "Redirect", "BD"], I: ["Summon", "Mawaru", "Redirect", "Romeida"], J: ["Dash", "DR", "SV", "DS"], K: ["SF", "DR", "DS", "Fakeout"]};
+const p3Combos = {A : ["Summon", "SS", "Romeida", "SV", "DS"], B: ["Summon", "Mawaru", "Redirect", "BD"], C: ["Summon", "SF", "Romeida", "DS"], D: ["Summon", "Mawaru", "Romeida", "VV"], E: ["VV", "Dash", "SS", "DS"], F: ["SS", "SV", "DR", "DS"], G: ["Summon", "SF", "Mawaru", "Redirect", "BD"], H: ["Summon", "SF", "Redirect", "BD"], I: ["Summon", "Mawaru", "Redirect", "Romeida"], J: ["Dash", "DR", "SV", "DS"], K: ["SF", "DR", "DS", "Fakeout"]};
 const p4Combos = {A : ["SS", "SV", "DR", "SV", "DS"], B : ["Dash", "Summon", "Redirect", "Romeida", "SR"], C: ["Fakeout", "DS", "Summon", "EF", "VV"], D:["Fakeout", "VV", "Summon", "Redirect", "Romeida"], E:["Summon", "EF", "Decap", "Dash", "SR"], F:["Summon", "SS", "SV", "DR", "SV", "ES"], G:["VV", "Summon", "DB", "BD", "WF"], H:["Dash", "Summon", "SF", "DB", "Romeida"], I:["Fakeout", "Summon", "SF", "ES", "SR"], J:["SF", "Summon", "DB", "Redirect", "ES", "SR"], K:["Summon", "Mawaru", "Romeida", "Summon", "DB", "BD"], L:["Summon", "DR", "SV", "DB", "ES"], M:["SF", "Summon", "Mawaru", "Redirect", "EF"], N:["TR", "SS", "SV", "DR", "DS"]}
 const p4Initials = {A : ["Dash", "Fakeout", "VV", "Summon", "Mawaru", "Redirect", "DB", "ES", "SR"]}
 let ans = 0;
@@ -128,10 +192,39 @@ document.getElementById("timer").textContent = timer/10;
 timerloop();
 
 /// special attacks ///
-function EvilFracture (){
+function EvilFracture (test){
+if (test == true){
+currentCombo.push("EF");
+}
+EFClick = 0;
 	intervalId4 = setInterval(timefracturing, 100);
+	
 } 
-
+function EFQTE(){
+EFClick += 1
+document.getElementById("progress").textContent = 10 - EFClick;
+if(EFClick == 10){
+ document.getElementById("EFOverlay").style.display = "none";
+}
+}
+function timefracturing() {
+	if(EFClick == 10||!currentCombo.includes("EF")){
+		clearInterval(intervalId4);
+		document.getElementById("timerstatus").textContent = "";
+		return;
+	}
+document.getElementById("EFTitle").textContent = "Time Fractured!";
+ document.getElementById("EFText").textContent = "SPAM 10 TIMES TO CLEAR REPAIR THE TIME!";
+ document.getElementById("EFOverlay").style.display = "flex";
+if (timer <= 10){
+clearInterval(intervalId4);
+ document.getElementById("EFOverlay").style.display = "none";
+}
+timer -= 1;
+document.getElementById("timer").textContent = timer/10;
+document.getElementById("timerstatus").style.color = "#5d00ff";
+document.getElementById("timerstatus").textContent = " Fractured Time! (2x Speed)";
+}
 
 function ShadowRiposte (){
 counter = true;
@@ -203,18 +296,18 @@ statuseffect.textContent = ""; //////////// MAKE SURE TO CHANGE THIS SO IT CAN W
 }
 
 function EveningShade(){
+ESduration--;
 	if (currentCombo.includes("ES")){
-	ESduration = 4;
+	ESduration = 2;
 	ESpara++;
 	ESlabel.style.color = "#800000";
 	}
-	else if (ESduration == 0){
+	else if (ESduration <= 0){
 	ESNearstate = false;
 	ESFarstate = false;
 	ESlabel.textContent = "";
 	return;
 	}
-	ESduration--;
 if (ESpara % 2 == 1){
 	ESNearstate = false;
 	ESFarstate = true;
@@ -264,24 +357,13 @@ else if (phase == 4){
 	currentCombo = comboname[randomKey];
 		EveningShade();
 		EvilFracture();
+	if (currentCombo.includes("EF")){
+	timer += 40;
+}
 	}
 
 
-	function timefracturing(){
-	if(guess.includes("EF")||!currentCombo.includes("EF")){
-		timer += 40;
-		clearInterval(intervalId4);
-		document.getElementById("timerstatus").textContent = "";
-		return;
-	}
-if (timer <= 10){
-clearInterval(intervalId4);
-}
-timer -= 1;
-document.getElementById("timer").textContent = timer/10;
-document.getElementById("timerstatus").style.color = "#5d00ff";
-document.getElementById("timerstatus").textContent = " Fractured Time! (2x Speed)";
-}
+	
 
 ///
 function attack(name, code){
@@ -370,7 +452,7 @@ lifelost = 0;
 }
 
 function imgcombo(combo){
-	i = 0;
+i = 0;
 const container = document.getElementById("imgattack");
 var imageUrl;
 function wait (){intervalId2 = setInterval(imgs, intervalP);}
@@ -562,10 +644,22 @@ reset();
 imgcombo(currentCombo);
 }
 
+function openPopup(title, text) {
+document.getElementById("popupTitle").textContent = title;
+  document.getElementById("popupText").textContent = text;
+  document.getElementById("popupOverlay").style.display = "flex";
+}
+openPopup(
+  "Carnellio",
+  "Guess the combo before time runs out."
+);
+function closePopup() {
+  document.getElementById("popupOverlay").style.display = "none";
+}
+
 
 
 </script>
-
 
 
 

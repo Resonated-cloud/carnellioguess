@@ -1,6 +1,17 @@
 <!DOCTYPE HTML>
 <title>hi</title>
+<button id="updatelogbutton" onclick="openUL()">Update Log</button>
 <center>
+<div id="UpdateLog" class="overlay" style="display:none;">
+  <!-- Popup box -->
+  <div class="popup">
+    <h2 id="UpdateLogTitle">UpdateLog</h2>
+    <p id="UpdateLogText">-- PATCH 02/02/2026: "hello QTE" -- <br></br> Misc : Added a temporary Popup when you open the website <br></br>Misc : Added Update Log (no shit)<br></br>Changed Evil Fracture mechanic to a QTE spam. (original EF Mechanic will be moved to other attack.)<br></br>Evil Fracture Compensation time is only 4 extra seconds now.<br></br>Shadow Riposte now counterattacks you if you send during the counter.<br></br>Bugfix : Fixed Timer Handling giving extra 4 seconds every single time (oops)</p>
+
+    <button onclick="closeUL()">Close</button>
+  </div>
+</div>
+
 <div id="popupOverlay" class="overlay" style="display:none;">
   <!-- Popup box -->
   <div class="popup">
@@ -228,6 +239,14 @@ document.getElementById("EFtimer").textContent = timer/10;
 document.getElementById("timerstatus").style.color = "#5d00ff";
 document.getElementById("timerstatus").textContent = " Fractured Time! (2x Speed)";
 }
+function openUL(){
+document.getElementById("UpdateLog").style.display = "flex";
+}
+
+function closeUL(){
+document.getElementById("UpdateLog").style.display = "none";
+}
+
 
 function ShadowRiposte (){
 counter = true;

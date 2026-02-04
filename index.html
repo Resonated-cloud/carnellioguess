@@ -314,7 +314,9 @@ let atk = document.getElementById("atk").textContent;
 let timer = document.getElementById("timer").textContent;
 let intervalId;
 let intervalId2;
-
+requestAnimationFrame(() => {
+  bgmp1.play().catch(e => console.log(e));
+});
 function timerloop(){ intervalId = setInterval(timedisplay, 1000);
 } 
 function timedisplay(){
@@ -780,8 +782,10 @@ function nextphase(){
 phase += 1;
 if (phase == 2){
 phasechange2 = "done";
-bgmp2.play();
 bgmp1.pause();
+	requestAnimationFrame(() => {
+  bgmp2.play().catch(e => console.log(e));
+});
 timerP = 120;
 intervalP = 500;
 dialogue.textContent = "Black Magic.";
@@ -796,8 +800,10 @@ document.getElementById("phase2text").style.display = "inline-block";
 if (phase == 3){
 bgmp3.currentTime = 17.3;
 phasechange3 = "done";
-bgmp3.play();
 bgmp2.pause();
+	requestAnimationFrame(() => {
+  bgmp3.play().catch(e => console.log(e));
+});
 timerP = 160;
 intervalP = 200;
 dialogue.textContent = "Sorcerer's Ancestry...";
@@ -816,8 +822,10 @@ document.getElementById("phase3text").style.display = "inline-block";
 
 if (phase == 4){
 phasechange4 = "done";
-bgmp4.play();
 bgmp3.pause();
+	requestAnimationFrame(() => {
+  bgmp4.play().catch(e => console.log(e));
+});
 timerP = 160;
 intervalP = 200;
 dialogue.textContent = "...Insignificant.";
@@ -882,6 +890,7 @@ function closePopup() {
 
 
 </script>
+
 
 
 

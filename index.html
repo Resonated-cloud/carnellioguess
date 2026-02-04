@@ -280,18 +280,20 @@ let lifecounter = document.getElementById("lifecounter");
 
 ///music
 const bgm = document.getElementById("bgm");
+let audioUnlocked = false;
 
 document.addEventListener("click", () => {
-  bgmp1.play();
-  bgmp1.volume = 0.25;
-  DecapSound.load();
-  bgmp2.load();
-   bgmp2.volume = 0.25;
-  bgmp3.load();
-   bgmp3.volume = 0.25;
-  bgmp4.load();
-   bgmp4.volume = 0.25;
-}, { once: true });
+  if (audioUnlocked) return;
+
+  const audios = document.querySelectorAll("audio");
+  audios.forEach(a => {
+    a.volume = 0;
+    a.play().then(() => {
+      a.pause();
+      a.currentTime = 0;
+      a.volume = 1;
+    }).catch(()=>{});
+  });
 
 
 let counter = false;
@@ -879,6 +881,7 @@ function closePopup() {
 
 
 </script>
+
 
 
 

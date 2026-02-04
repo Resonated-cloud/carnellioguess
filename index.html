@@ -779,9 +779,8 @@ phase += 1;
 if (phase == 2){
 phasechange2 = "done";
 bgmp1.pause();
-	requestAnimationFrame(() => {
-  bgmp2.play().catch(e => console.log(e));
-});
+  bgmp2.play();
+
 timerP = 120;
 intervalP = 500;
 dialogue.textContent = "Black Magic.";
@@ -797,9 +796,7 @@ if (phase == 3){
 bgmp3.currentTime = 17.3;
 phasechange3 = "done";
 bgmp2.pause();
-	requestAnimationFrame(() => {
-  bgmp3.play().catch(e => console.log(e));
-});
+bgmp3.play();
 timerP = 160;
 intervalP = 200;
 dialogue.textContent = "Sorcerer's Ancestry...";
@@ -819,9 +816,7 @@ document.getElementById("phase3text").style.display = "inline-block";
 if (phase == 4){
 phasechange4 = "done";
 bgmp3.pause();
-	requestAnimationFrame(() => {
-  bgmp4.play().catch(e => console.log(e));
-});
+  bgmp4.play();
 timerP = 160;
 intervalP = 200;
 dialogue.textContent = "...Insignificant.";
@@ -886,6 +881,7 @@ function closePopup() {
 
 
 </script>
+
 
 
 

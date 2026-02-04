@@ -310,9 +310,6 @@ let atk = document.getElementById("atk").textContent;
 let timer = document.getElementById("timer").textContent;
 let intervalId;
 let intervalId2;
-requestAnimationFrame(() => {
-  bgmp1.play().catch(e => console.log(e));
-});
 function timerloop(){ intervalId = setInterval(timedisplay, 1000);
 } 
 function timedisplay(){
@@ -881,6 +878,7 @@ function closePopup() {
 
 
 </script>
+
 
 
 

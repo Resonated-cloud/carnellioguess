@@ -1,24 +1,24 @@
 <!DOCTYPE HTML>
 
 <audio id="bgmp1" loop>
-  <source src="songs/GatherUndersNight.mp3" type="audio/mpeg">
+  <source src="GatherUndersNight.mp3" type="audio/mpeg">
 </audio>
 
 <audio id="DecapSound">
-  <source src="soundeffects/DecapSound.mp3" type="audio/mpeg">
+  <source src="DecapSound.mp3" type="audio/mpeg">
 </audio>
 
 <audio id="bgmp2" loop>
-  <source src="songs/NewWorldOrder.mp3" type="audio/mpeg">
+  <source src="NewWorldOrder.mp3" type="audio/mpeg">
 </audio>
 
 <audio id="bgmp3" loop>
-  <source src="songs/ForAllTheUniverse.mp3" type="audio/mpeg">
+  <source src="ForAllTheUniverse.mp3" type="audio/mpeg">
 </audio>
 
 
 <audio id="bgmp4" loop>
-  <source src="songs/BloodDrainAgain.mp3" type="audio/mpeg">
+  <source src="BloodDrainAgain.mp3" type="audio/mpeg">
 </audio>
 
 
@@ -36,7 +36,7 @@
   <!-- Popup box -->
   <div class="Update_Log">
     <h2 id="UpdateLogTitle">Update Log</h2>
-    <p id="UpdateLogText">PATCH 04/02/2026: "I can upload musics wow!"<br></br>Misc : Added audio Musics from phase 1 - 4 (music setting will be added soon)<br></br>Misc : Added audio for Decapitate fail.<br></br>(!!!) Added Wandering Flame mechanic (still WIP in term of design.)<br></br>Nerfed Evil Fracture click req: 10 -> 8 clicks<br>Evil Fracture Time Compensation: 4 -> 5 seconds.<br></br>Bugfix : Fixed image loading lately, therefore leading to misarranged combos.<br></br>Bugfix : Fixed Timer keeps going down despite opening Update Log.<br></br>QoL : Disabled Mobile Zooming, therefore spamming should be easier now on mobiles.
+    <p id="UpdateLogText">PATCH 04/02/2026: "I can upload musics wow!"<br></br>Misc : Added audio Musics from phase 1 - 4 (music setting will be added soon)<br></br>Misc : Added audio for Decapitate fail.<br></br>(!!!) Added Wandering Flame mechanic (still WIP in term of design.)<br></br>Nerfed Evil Fracture click req: 10 -> 8 clicks<br>Evil Fracture Time Compensation: 4 -> 5 seconds.<br></br>Bugfix : Fixed image loading lately, therefore leading to misarranged combos.<br></br>Bugfix : Fixed Timer keeps going down despite opening Update Log.
 
 <br></br>-- PATCH 02/02/2026: "hello QTE" -- <br></br> Misc : Added a temporary Popup when you open the website <br></br>Misc : Added Update Log (no shit)<br></br>Changed Evil Fracture mechanic to a QTE spam. (original EF Mechanic will be moved to other attack.)<br></br>Evil Fracture Compensation time is only 4 extra seconds now.<br></br>Shadow Riposte now counterattacks you if you send during the counter.<br></br>Bugfix : Fixed Timer Handling giving extra 4 seconds every single time (oops)</p>
 
@@ -134,26 +134,31 @@
 <p id="atk" style="color: #5d00ff;"> </p>
 </div>
 <p id="msgthing"><span id="msg"></span><span id="damageshow"></span><span id="damagemultishow"></span></p>
-<button id = "send" onclick="check()">Send</button>
-<button id = "Backspace" onclick="backspace()">Backspace</button>
-<button id = "clear" onclick="clearcombo()">Clear All</button>
+<button id = "send" onclick="check()" style="width: 60px; height: 30px;" >Send</button>
+<button id = "Backspace" onclick="backspace()" style="width: 100px; height: 30px;" >Backspace</button>
+<button id = "clear" onclick="clearcombo()" style="width: 80px; height: 30px;" >Clear All</button>
 <button id = "phasetest" onclick="damagecarn(1640000)">Phase 2 damage thing</button>
 <button id = "phasetest" onclick="EvilFracture(true)">EF Qte</button>
-<button id = "phasetest" onclick="createWF()">Wandering Flame anim test</button>
+<button id = "phasetest" onclick="createWF()">WF test</button>
 <br></br>
-<button id ="SS" onclick="attack('Sweeping Seize', 'SS')">Sweeping Seize</button>
-<button id ="Decap" onclick="attack('Decapitate', 'Decap')">Decapitate</button>
-<button id ="VV" onclick="attack('Violet Viper', 'VV')">Violet Viper</button>
-<button id ="Fakeout" onclick="attack('Fakeout', 'Fakeout')">Fakeout</button>
-<button id ="Dash" onclick="attack('Dash', 'Dash')">Dash</button>
-<button id ="TR" onclick="attack('Tyrant Revolver', 'TR')">Tyrant Revolver</button>
-<button id ="WF" onclick="attack('Wandering Flame', 'WF')">Wandering Flame</button>
+<div>
+<p>Phase 1 attacks :</p>
+<left>
+<button id ="SS" onclick="attack('Sweeping Seize', 'SS')" style="width: 120px; height: 30px;" >Sweeping Seize</button>
+<button id ="TR" onclick="attack('Tyrant Revolver', 'TR')" style="width: 120px; height: 30px;" >Tyrant Revolver</button>
+<button id ="WF" onclick="attack('Wandering Flame', 'WF')" style="width: 130px; height: 30px;" >Wandering Flame</button>
+<button id ="Decap" onclick="attack('Decapitate', 'Decap')" style="width: 100px; height: 30px;" >Decapitate</button>
+<button id ="VV" onclick="attack('Violet Viper', 'VV')" style="width: 100px; height: 30px;" >Violet Viper</button>
+<button id ="Fakeout" onclick="attack('Fakeout', 'Fakeout')" style="width: 100px; height: 30px;" >Fakeout</button>
+<button id ="Dash" onclick="attack('Dash', 'Dash')" style="width: 100px; height: 30px;" >Dash</button>
 <br></br>
+</left>
+</div>
 <p id = "phase2text" style="display: none";>Phase 2 Attacks :</p>
-<button id ="SV" style="display: none"; onclick="attack('Shadow Viper', 'SV')">Shadow Viper</button>
-<button id ="SF" style="display: none"; onclick="attack('Shadow Flame', 'SF')">Shadow Flame</button>
-<button id ="DS" style="display: none"; onclick="attack('Deadspike', 'DS')">Deadspike</button>
-<button id ="DR" style="display: none"; onclick="attack('Dark Revolver', 'DR')">Dark Revolver</button><br></br>
+<button id ="SV" style="display: none"; onclick="attack('Shadow Viper', 'SV')" >Shadow Viper</button>
+<button id ="SF" style="display: none"; onclick="attack('Shadow Flame', 'SF')" >Shadow Flame</button>
+<button id ="DS" style="display: none"; onclick="attack('Deadspike', 'DS')" >Deadspike</button>
+<button id ="DR" style="display: none"; onclick="attack('Dark Revolver', 'DR')" >Dark Revolver</button><br></br>
 <p id = "phase3text" style="display: none";>Phase 3 Attacks :</p>
 <button id ="Summon" style="display: none"; onclick="attack('Summon', 'Summon')">Summon</button>
 <button id ="Redirect" style="display: none"; onclick="attack('Redirect', 'Redirect')">Redirect</button>
@@ -833,6 +838,8 @@ document.getElementById("phase4text").style.display = "inline-block";
 }
 function showButtons(name){
 let button = document.getElementById(name);
+button.style.width = "120px";
+button.style.height = "30px";
 button.style.display = "inline-block";
 }
 function damagecarn(x){

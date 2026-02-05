@@ -267,6 +267,7 @@ function bgmchange(src, volume, start){
 bgm.pause();
 
 bgm.src = src;
+	bgm.load();
 bgm.currentTime = start;
 bgm.volume = volume;
 
@@ -854,6 +855,7 @@ function closePopup() {
 
 
 </script>
+
 
 
 

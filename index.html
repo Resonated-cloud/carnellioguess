@@ -1,26 +1,8 @@
 <!DOCTYPE HTML>
 
-<audio id="bgmp1" loop>
+<audio id="bgm" loop>
   <source src="songs/Gatherundersnight.mp3" type="audio/mpeg">
 </audio>
-
-<audio id="DecapSound">
-  <source src="soundeffects/DecapSound.mp3" type="audio/mpeg">
-</audio>
-
-<audio id="bgmp2" loop>
-  <source src="songs/Newworldorder.mp3" type="audio/mpeg">
-</audio>
-
-<audio id="bgmp3" loop>
-  <source src="songs/Foralltheuniverse.mp3" type="audio/mpeg">
-</audio>
-
-
-<audio id="bgmp4" loop>
-  <source src="songs/Blooddraina.mp3" type="audio/mpeg">
-</audio>
-
 
 
 
@@ -231,11 +213,6 @@
 
 
 <script>
-let statusEffects = {
-    burn: null,   // stores remaining seconds for burn
-    venom: null, // stores remaining seconds for poison
-    freeze: null  // etc.
-};
 let extralife = 0;
 let SRcd = false;
 let damagedisplay = document.getElementById("damageshow");
@@ -282,17 +259,20 @@ let lifecounter = document.getElementById("lifecounter");
 const bgm = document.getElementById("bgm");
 
 document.addEventListener("click", () => {
-  bgmp1.play();
-  bgmp1.volume = 0.25;
-  DecapSound.load();
-  bgmp2.play();
-   bgmp2.volume = 0;
-  bgmp3.play();
-   bgmp3.volume = 0;
-   bgmp4.play(); 
-   bgmp4.volume = 0;
+  bgm.play();
+  bgm.volume = 0.25;
 }, { once: true });
 
+function bgmchange(src, volume, start){
+bgm.pause();
+
+bgm.src = src;
+bgm.currentTime = start;
+bgm.volume = volume;
+
+setTimeout(function(){bgm.play();},1);
+
+}
 let counter = false;
 let guess = [];
 /// p1 combos
@@ -775,9 +755,7 @@ function nextphase(){
 phase += 1;
 if (phase == 2){
 phasechange2 = "done";
-bgmp1.volume = 0;
-bgmp2.currentTime = 0;
-bgmp2.volume = 0.25;
+bgmchange('songs/Newworldorder.mp3', 0.25, 0);
 
 timerP = 120;
 intervalP = 500;
@@ -791,9 +769,7 @@ showButtons('DR');
 document.getElementById("phase2text").style.display = "inline-block";
 }
 if (phase == 3){
-bgmp2.volume = 0;
-bgmp3.currentTime = 17.3;
-bgmp3.volume = 0.25;
+bgmchange('songs/Foralltheuniverse.mp3', 0.25, 17.3);
 phasechange3 = "done";
 timerP = 160;
 intervalP = 200;
@@ -813,9 +789,7 @@ document.getElementById("phase3text").style.display = "inline-block";
 
 if (phase == 4){
 phasechange4 = "done";
-bgmp3.volume = 0;
-bgmp4.currentTime = 0;
-bgmp4.volume = 0.25;
+bgmchange('songs/Blooddraina.mp3', 0.25, 0);
 timerP = 160;
 intervalP = 200;
 dialogue.textContent = "...Insignificant.";

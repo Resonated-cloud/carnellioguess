@@ -285,12 +285,12 @@ document.addEventListener("click", () => {
   bgmp1.play();
   bgmp1.volume = 0.25;
   DecapSound.load();
-  bgmp2.load();
-   bgmp2.volume = 0.25;
-  bgmp3.load();
-   bgmp3.volume = 0.25;
-  bgmp4.load();
-   bgmp4.volume = 0.25;
+  bgmp2.play();
+   bgmp2.volume = 0;
+  bgmp3.play();
+   bgmp3.volume = 0;
+   bgmp4.play(); 
+   bgmp4.volume = 0;
 }, { once: true });
 
 let counter = false;
@@ -775,8 +775,9 @@ function nextphase(){
 phase += 1;
 if (phase == 2){
 phasechange2 = "done";
-bgmp1.pause();
-setTimeout(function(){bgmp2.play();},500)
+bgmp1.volume = 0;
+bgmp2.currentTime = 0;
+bgmp2.volume = 0.25;
 
 timerP = 120;
 intervalP = 500;
@@ -790,10 +791,10 @@ showButtons('DR');
 document.getElementById("phase2text").style.display = "inline-block";
 }
 if (phase == 3){
-bgmp2.pause();
+bgmp2.volume = 0;
 bgmp3.currentTime = 17.3;
+bgmp3.volume = 0.25;
 phasechange3 = "done";
-setTimeout(function(){bgmp3.play();},500)
 timerP = 160;
 intervalP = 200;
 dialogue.textContent = "Sorcerer's Ancestry...";
@@ -812,8 +813,9 @@ document.getElementById("phase3text").style.display = "inline-block";
 
 if (phase == 4){
 phasechange4 = "done";
-bgmp3.pause();
-setTimeout(function(){bgmp4.play();},500)
+bgmp3.volume = 0;
+bgmp4.currentTime = 0;
+bgmp4.volume = 0.25;
 timerP = 160;
 intervalP = 200;
 dialogue.textContent = "...Insignificant.";

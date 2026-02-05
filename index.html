@@ -776,7 +776,7 @@ phase += 1;
 if (phase == 2){
 phasechange2 = "done";
 bgmp1.pause();
-  bgmp2.play();
+setTimeout(function(){bgmp2.play();},500)
 
 timerP = 120;
 intervalP = 500;
@@ -790,10 +790,10 @@ showButtons('DR');
 document.getElementById("phase2text").style.display = "inline-block";
 }
 if (phase == 3){
+bgmp2.pause();
 bgmp3.currentTime = 17.3;
 phasechange3 = "done";
-bgmp2.pause();
-bgmp3.play();
+setTimeout(function(){bgmp3.play();},500)
 timerP = 160;
 intervalP = 200;
 dialogue.textContent = "Sorcerer's Ancestry...";
@@ -813,7 +813,7 @@ document.getElementById("phase3text").style.display = "inline-block";
 if (phase == 4){
 phasechange4 = "done";
 bgmp3.pause();
-  bgmp4.play();
+setTimeout(function(){bgmp4.play();},500)
 timerP = 160;
 intervalP = 200;
 dialogue.textContent = "...Insignificant.";
@@ -878,6 +878,7 @@ function closePopup() {
 
 
 </script>
+
 
 
 

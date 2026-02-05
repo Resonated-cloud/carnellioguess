@@ -267,9 +267,14 @@ function bgmchange(src, volume, start){
 bgm.pause();
 
 bgm.src = src;
-	bgm.load();
-bgm.currentTime = start;
-bgm.volume = volume;
+bgm.load();
+bgm.addEventListener("canplaythrough", function onReady() {
+    bgm.removeEventListener("canplaythrough", onReady);
+
+    bgm.volume = volume;
+    bgm.currentTime = start;
+    bgm.play().catch(() => {});
+  });
 
 setTimeout(function(){bgm.play();},1);
 
@@ -756,7 +761,7 @@ function nextphase(){
 phase += 1;
 if (phase == 2){
 phasechange2 = "done";
-bgmchange("songs/Newworldorder.mp3", 0.25, 0);
+bgmchange('songs/Newworldorder.mp3', 0.25, 0);
 
 timerP = 120;
 intervalP = 500;
@@ -770,7 +775,7 @@ showButtons('DR');
 document.getElementById("phase2text").style.display = "inline-block";
 }
 if (phase == 3){
-bgmchange("songs/Foralltheuniverse.mp3", 0.25, 17.3);
+bgmchange('songs/Foralltheuniverse.mp3', 0.25, 17.3);
 phasechange3 = "done";
 timerP = 160;
 intervalP = 200;
@@ -790,7 +795,7 @@ document.getElementById("phase3text").style.display = "inline-block";
 
 if (phase == 4){
 phasechange4 = "done";
-bgmchange("songs/Blooddraina.mp3", 0.25, 0);
+bgmchange('songs/Blooddraina.mp3', 0.25, 0);
 timerP = 160;
 intervalP = 200;
 dialogue.textContent = "...Insignificant.";
@@ -855,6 +860,7 @@ function closePopup() {
 
 
 </script>
+
 
 
 

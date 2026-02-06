@@ -1,5 +1,11 @@
 <!DOCTYPE HTML>
+<div id="loading" style="display: none" class="overlay">
+ <div class="popup">
+  Loading...
+</div>
+</div>
 
+<audio id="bgm"></audio>
 <audio id="bgm" loop>
   <source src="songs/Gatherundersnight.mp3" preload="auto" type="audio/mpeg">
 </audio>
@@ -261,18 +267,16 @@ const bgm = document.getElementById("bgm");
 document.addEventListener("click", () => {
   bgm.play();
   bgm.volume = 0.25;
+
+
 }, { once: true });
 
+
+const loading = document.getElementById("loading");
 function bgmchange(src, volume, start){
 bgm.pause();
-
 bgm.src = src;
 bgm.load();
-Promise.all([
-  preloadAudio("songs/Newworldorder.mp3"),
-  preloadAudio("songs/Foralltheuniverse.mp3"),
-	  preloadAudio("songs/Blooddraina.mp3")
-])
 bgm.addEventListener("canplaythrough", function onReady() {
     bgm.removeEventListener("canplaythrough", onReady);
     
@@ -282,6 +286,25 @@ bgm.addEventListener("canplaythrough", function onReady() {
   });
 
 }
+function loadsound(src){
+return new Promise((resolve)=>{
+
+const a = new Audio();
+a.src = src;
+a.addEventListener("canplaythrough", resolve, {once: true});
+});
+}
+
+function loadBGM(){
+Promise.all([
+  loadsound('songs/Newworldorder.mp3'),
+  loadsound('songs/Foralltheuniverse.mp3'),
+  loadsound('songs/Blooddraina.mp3')
+]).then(() => {
+  document.getElementById("loading").style.display = "none";
+});}
+
+
 let counter = false;
 let guess = [];
 /// p1 combos
@@ -858,11 +881,13 @@ openPopup(
 );
 function closePopup() {
   document.getElementById("popupOverlay").style.display = "none";
+  loadBGM();
 }
 
 
 
 </script>
+
 
 
 

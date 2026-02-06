@@ -268,9 +268,14 @@ bgm.pause();
 
 bgm.src = src;
 bgm.load();
+Promise.all([
+  preloadAudio("songs/Newworldorder.mp3"),
+  preloadAudio("songs/Foralltheuniverse.mp3"),
+	  preloadAudio("songs/Blooddraina.mp3")
+])
 bgm.addEventListener("canplaythrough", function onReady() {
     bgm.removeEventListener("canplaythrough", onReady);
-
+    
     bgm.volume = volume;
     bgm.currentTime = start;
     bgm.play().catch(() => {});
@@ -858,6 +863,7 @@ function closePopup() {
 
 
 </script>
+
 
 
 

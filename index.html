@@ -7,7 +7,7 @@
 
 <audio id="bgm"></audio>
 <audio id="bgm" loop>
-  <source src="songs/Gatherundersnight.mp3" preload="auto" type="audio/mpeg">
+  <source src="songs/Gatherundersnight.mp3" preload = "auto" type="audio/mpeg">
 </audio>
 
 
@@ -263,8 +263,9 @@ let lifecounter = document.getElementById("lifecounter");
 
 ///music
 const bgm = document.getElementById("bgm");
-
 document.addEventListener("click", () => {
+
+  bgm.src = 'songs/Gatherundersnight.mp3';
   bgm.play();
   bgm.volume = 0.25;
 
@@ -274,7 +275,6 @@ document.addEventListener("click", () => {
 
 const loading = document.getElementById("loading");
 function bgmchange(src, volume, start){
-bgm.pause();
 bgm.src = src;
 bgm.load();
 bgm.addEventListener("canplaythrough", function onReady() {
@@ -286,6 +286,7 @@ bgm.addEventListener("canplaythrough", function onReady() {
   });
 
 }
+
 function loadsound(src){
 return new Promise((resolve)=>{
 
@@ -296,6 +297,7 @@ a.addEventListener("canplaythrough", resolve, {once: true});
 }
 
 function loadBGM(){
+document.getElementById("loading").style.display = "flex";
 Promise.all([
   loadsound('songs/Newworldorder.mp3'),
   loadsound('songs/Foralltheuniverse.mp3'),
@@ -883,7 +885,6 @@ function closePopup() {
   document.getElementById("popupOverlay").style.display = "none";
   loadBGM();
 }
-
 
 
 </script>

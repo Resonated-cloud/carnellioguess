@@ -304,6 +304,7 @@ Promise.all([
   loadsound('songs/Blooddraina.mp3')
 ]).then(() => {
   document.getElementById("loading").style.display = "none";
+  timerloop();
 });}
 
 
@@ -334,7 +335,6 @@ final();
 timer -= 10;
 document.getElementById("timer").textContent = timer/10;
 }
-timerloop();
 
 /// special attacks ///
 function EvilFracture (test){
@@ -888,6 +888,7 @@ function closePopup() {
 
 
 </script>
+
 
 
 

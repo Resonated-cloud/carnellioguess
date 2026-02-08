@@ -4,8 +4,9 @@
   Loading...
 </div>
 </div>
-
-<audio id="bgm"></audio>
+<audio id="DecapSound">
+ <source src="soundeffects/DecapSound.mp3" preload = "auto" type="audio/mpeg">
+</audio>
 <audio id="bgm" loop>
   <source src="songs/Gatherundersnight.mp3" preload = "auto" type="audio/mpeg">
 </audio>
@@ -82,6 +83,7 @@
 
 
 </style>
+
 <div id="popupOverlay" class="overlay" style="display:none;">
   <!-- Popup box -->
   <div class="popup">
@@ -105,10 +107,18 @@
 </div>
 
 
+
+
 <h1>guess carnellio combo thing</h1>
-<h2>BOSS : Carnellio</h2>
-<p id=healthbar>Health : <span id = "health">12550000</span><br>
-<h2 id=dialogue style="color: #5d00ff;"></h2><br>
+<div class="gui";>
+<div id = titlebar class = "titlebar";><h1>BOSS : Carnellio</h1>
+	<div id = healthbar class "healthbar">
+	<h2>Health : <span id = "health">12550000</span></h2>
+	</div>
+</div>
+<div id=dialogue class = "dialogue";></div><br>
+</div>
+
 <img src = "images/CARNELLIO.webp" width = "100" height = "100">
 <div id = "imgattack">
 </div>
@@ -128,37 +138,48 @@
 <button id = "phasetest" onclick="damagecarn(1640000)">Phase 2 damage thing</button>
 <button id = "phasetest" onclick="EvilFracture(true)">EF Qte</button>
 <button id = "phasetest" onclick="createWF()">WF test</button>
-<br></br>
-<div>
+<button onclick="redirect()">Redirect test</button>
+<div class="attackgui1">
 <p>Phase 1 attacks :</p>
 <left>
-<button id ="SS" onclick="attack('Sweeping Seize', 'SS')" style="width: 120px; height: 30px;" >Sweeping Seize</button>
-<button id ="TR" onclick="attack('Tyrant Revolver', 'TR')" style="width: 120px; height: 30px;" >Tyrant Revolver</button>
-<button id ="WF" onclick="attack('Wandering Flame', 'WF')" style="width: 130px; height: 30px;" >Wandering Flame</button>
-<button id ="Decap" onclick="attack('Decapitate', 'Decap')" style="width: 100px; height: 30px;" >Decapitate</button>
-<button id ="VV" onclick="attack('Violet Viper', 'VV')" style="width: 100px; height: 30px;" >Violet Viper</button>
-<button id ="Fakeout" onclick="attack('Fakeout', 'Fakeout')" style="width: 100px; height: 30px;" >Fakeout</button>
-<button id ="Dash" onclick="attack('Dash', 'Dash')" style="width: 100px; height: 30px;" >Dash</button>
-<br></br>
-</left>
+<div class="attackbars">
+<button id ="SS" class="attack" onclick="attack('Sweeping Seize', 'SS')" style="width: 120px; height: 30px;" >Sweeping Seize</button>
+<button id ="TR" class="attack" onclick="attack('Tyrant Revolver', 'TR')" style="width: 120px; height: 30px;" >Tyrant Revolver</button>
+<button id ="WF" class="attack" onclick="attack('Wandering Flame', 'WF')" style="width: 130px; height: 30px;" >Wandering Flame</button>
+<button id ="Decap" class="attack" onclick="attack('Decapitate', 'Decap')" style="width: 100px; height: 30px;" >Decapitate</button>
+<button id ="VV" class="attack" onclick="attack('Violet Viper', 'VV')" style="width: 100px; height: 30px;" >Violet Viper</button>
+<button id ="Fakeout" class="attack" onclick="attack('Fakeout', 'Fakeout')" style="width: 100px; height: 30px;" >Fakeout</button>
+<button id ="Dash" class="attack" onclick="attack('Dash', 'Dash')" style="width: 100px; height: 30px;" >Dash</button>
 </div>
+</div>
+</left>
+<div class="attackgui2">
 <p id = "phase2text" style="display: none";>Phase 2 Attacks :</p>
-<button id ="SV" style="display: none"; onclick="attack('Shadow Viper', 'SV')" >Shadow Viper</button>
-<button id ="SF" style="display: none"; onclick="attack('Shadow Flame', 'SF')" >Shadow Flame</button>
-<button id ="DS" style="display: none"; onclick="attack('Deadspike', 'DS')" >Deadspike</button>
-<button id ="DR" style="display: none"; onclick="attack('Dark Revolver', 'DR')" >Dark Revolver</button><br></br>
+<div class="attackbars">
+<button id ="SV" style="display: none"; class="attack" onclick="attack('Shadow Viper', 'SV')" >Shadow Viper</button>
+<button id ="SF" style="display: none"; class="attack" onclick="attack('Shadow Flame', 'SF')" >Shadow Flame</button>
+<button id ="DS" style="display: none"; class="attack" onclick="attack('Deadspike', 'DS')" >Deadspike</button>
+<button id ="DR" style="display: none"; class="attack" onclick="attack('Dark Revolver', 'DR')" >Dark Revolver</button><br></br>
+</div>
+<div class="attackgui3">
 <p id = "phase3text" style="display: none";>Phase 3 Attacks :</p>
-<button id ="Summon" style="display: none"; onclick="attack('Summon', 'Summon')">Summon</button>
-<button id ="Redirect" style="display: none"; onclick="attack('Redirect', 'Redirect')">Redirect</button>
-<button id ="BD" style="display: none"; onclick="attack('Black Divinity', 'BD')">Black Divinity</button>
-<button id ="Romeida" style="display: none"; onclick="attack('Romeida', 'Romeida')">Romeida</button>
-<button id ="Mawaru" style="display: none"; onclick="attack('Mawaru', 'Mawaru')">Mawaru</button>
-<br></br>
+<div class="attackbars">
+<button id ="Summon" style="display: none"; class="attack" onclick="attack('Summon', 'Summon')">Summon</button>
+<button id ="Redirect" style="display: none"; class="attack" onclick="attack('Redirect', 'Redirect')">Redirect</button>
+<button id ="BD" style="display: none"; class="attack" onclick="attack('Black Divinity', 'BD')">Black Divinity</button>
+<button id ="Romeida" style="display: none"; class="attack" onclick="attack('Romeida', 'Romeida')">Romeida</button>
+<button id ="Mawaru" style="display: none"; class="attack" onclick="attack('Mawaru', 'Mawaru')">Mawaru</button>
+</div>
+</div>
+<div class="attackgui4">
 <p id = "phase4text" style="display: none";>Phase 4 Attacks :</p>
-<button id ="DB" style="display: none"; onclick="attack('Dragon Bullet', 'DB')">Dragon Bullet</button>
-<button id ="ES" style="display: none"; onclick="attack('Evening Shade', 'ES')">Evening Shade</button>
-<button id ="SR" style="display: none; color:"#5d00c8"; onclick="attack('Shadow Riposte', 'SR')">Shadow Riposte</button>
-<button id ="EF" style="display: none"; onclick="attack('Evil Fracture', 'EF')">Evil Fracture</button>
+<div class="attackbars">
+<button id ="DB" style="display: none"; class="attack" onclick="attack('Dragon Bullet', 'DB')">Dragon Bullet</button>
+<button id ="ES" style="display: none"; class="attack" onclick="attack('Evening Shade', 'ES')">Evening Shade</button>
+<button id ="SR" style="display: none; color:"#5d00c8"; class="attack" onclick="attack('Shadow Riposte', 'SR')">Shadow Riposte</button>
+<button id ="EF" style="display: none"; class="attack" onclick="attack('Evil Fracture', 'EF')">Evil Fracture</button>
+</div>
+</div>
 
 <style>
 .overlay {
@@ -195,8 +216,29 @@
     padding: 10px;
   border-radius: 10px;
   text-align: center;
-  box-shadow: 0 0 20px #5d00ff;
-
+  box-shadow: 0 0 20px #5c00ff;
+}
+.dialogue{
+   color: #694bf6;
+   font-size: 40px;
+  -webkit-text-stroke-width: 0.5px; /* Sets the outline width */
+  -webkit-text-stroke-color: black; /* Sets the outline color */
+   font-weight: bold;
+    width: 100%;
+  height: 100%;
+  pointer-events: none;
+  position: fixed;
+  display: flex;
+  top: 10%;
+  left: 0;
+  align-items: top;
+  justify-content: center;
+    z-index: 10;
+}
+.attackbars{
+display: flex;
+gap: 10px;
+justify-content: center;
 }
 
 .popup button {
@@ -212,13 +254,45 @@
 .popup button:hover {
   background: #7a2cff;
 }
+.gui {
+  position: fixed;
+  height: 80px; /* same height as healthbar */
+}
 
+.titlebar {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 80px;
+display: flex;
+justify-content: center;
+pointer-events: none;
+align-items: flex-start;
+}
+.healthbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
 
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* or center */
+
+  pointer-events: none;
+  z-index: 10;
+}
 </style>
 </html>
 
 
 <script>
+///button order
+const buttons = document.querySelectorAll(".attack");
+
+
 let extralife = 0;
 let SRcd = false;
 let damagedisplay = document.getElementById("damageshow");
@@ -271,7 +345,6 @@ document.addEventListener("click", () => {
 
 
 }, { once: true });
-
 
 const loading = document.getElementById("loading");
 function bgmchange(src, volume, start){
@@ -391,7 +464,49 @@ dialogue.textContent = "";
 counter = false;
 }, 5000)
 }
-
+//Redirect Attack
+  const attackbuttons = ["SS", "TR", "WF", "Decap", "VV"];
+function redirect() {
+document.querySelectorAll(".attack").forEach((btn, i) => {
+  btn.style.order = i;
+});
+let attackbuttoncurrent = [...attackbuttons];
+  let attackchosen = [];
+  let buttonOrder = [];
+  let removeattack;
+  let randomAttack1 = attackbuttoncurrent[Math.floor(Math.random() * attackbuttoncurrent.length)];
+  console.log(randomAttack1);
+  let attackchosen1 = document.getElementById(randomAttack1);
+  let buttonOrder1 = Number(getComputedStyle(attackchosen1).order);
+  removeattack = attackbuttoncurrent.indexOf(randomAttack1);
+  attackbuttoncurrent.splice(removeattack, 1);
+console.log(buttonOrder1);
+  let randomAttack2 = attackbuttoncurrent[Math.floor(Math.random() * attackbuttoncurrent.length)];
+  console.log(randomAttack2);
+   let attackchosen2 = document.getElementById(randomAttack2);
+  let buttonOrder2 = Number(getComputedStyle(attackchosen2).order);
+    removeattack = attackbuttoncurrent.indexOf(randomAttack2);
+  attackbuttoncurrent.splice(removeattack, 1);
+  let randomAttack3 = attackbuttoncurrent[Math.floor(Math.random() * attackbuttoncurrent.length)];
+  console.log(randomAttack3);
+   let attackchosen3 = document.getElementById(randomAttack3);
+  let buttonOrder3 = Number(getComputedStyle(attackchosen3).order);
+  removeattack = attackbuttoncurrent.indexOf(randomAttack3);
+  attackbuttoncurrent.splice(removeattack, 1);
+  attackchosen.push(randomAttack1, randomAttack2, randomAttack3);
+  buttonOrder.push(buttonOrder1, buttonOrder2, buttonOrder3);
+ console.log(buttonOrder);
+  for (c = 0; c < 3; c++){
+  console.log(attackchosen);
+  console.log(buttonOrder);
+  let HowRandom = Math.floor(Math.random() * attackchosen.length);
+  document.getElementById(attackchosen[HowRandom]).style.order = buttonOrder[i];
+  removeattack = attackchosen.indexOf(HowRandom);
+  attackchosen.splice(removeattack, 1);
+  
+}
+  
+}
 //WF SPINNN ATTACK
 function createWF(){
   const orbit = document.createElement("div");
@@ -580,7 +695,7 @@ ShadowRiposte();
 }
 else{
 return;}}
-if (currentCombo.includes("WF")){
+if (currentCombo.includes("WF") && code == "WF"){
 	createWF();
 	}
 if (WFstate == true){
@@ -595,7 +710,9 @@ document.getElementById("atk").textContent += " > " + name;}
 guess.push(code);
 guessattempt = false;
 }
+
 randomCombo();
+
 function check(){
 console.log("guess:", JSON.stringify(guess));
 console.log("current:", JSON.stringify(currentCombo));
@@ -790,7 +907,7 @@ phase += 1;
 if (phase == 2){
 phasechange2 = "done";
 bgmchange('songs/Newworldorder.mp3', 0.25, 0);
-
+attackbuttons.push("SV", "DS", "SF", "DR");
 timerP = 120;
 intervalP = 500;
 dialogue.textContent = "Black Magic.";
@@ -804,6 +921,7 @@ document.getElementById("phase2text").style.display = "inline-block";
 }
 if (phase == 3){
 bgmchange('songs/Foralltheuniverse.mp3', 0.25, 17.3);
+attackbuttons.push("BD", "Summon", "Mawaru", "Romeida");
 phasechange3 = "done";
 timerP = 160;
 intervalP = 200;
@@ -823,6 +941,7 @@ document.getElementById("phase3text").style.display = "inline-block";
 
 if (phase == 4){
 phasechange4 = "done";
+attackbuttons.push("SR", "EF", "DB", "ES");
 bgmchange('songs/Blooddraina.mp3', 0.25, 0);
 timerP = 160;
 intervalP = 200;
@@ -888,7 +1007,6 @@ function closePopup() {
 
 
 </script>
-
 
 
 

@@ -116,7 +116,7 @@
 	<h2>Health : <span id = "health">12550000</span></h2>
 	</div>
 </div>
-<div id=dialogue class = "dialogue";></div><br>
+        <div id=dialogue class = "dialogue";></div><br>
 </div>
 
 <img src = "images/CARNELLIO.webp" width = "100" height = "100">
@@ -139,6 +139,10 @@
 <button id = "phasetest" onclick="EvilFracture(true)">EF Qte</button>
 <button id = "phasetest" onclick="createWF()">WF test</button>
 <button onclick="redirect()">Redirect test</button>
+<button onclick="venomfunction(0, 1)">venom test</button>
+<button onclick="burn(1)">burn test</button>
+<button onclick="slowfunction(50, 15)">slow test</button>
+<button onclick="weakenedfunction(20)">slow test</button>
 <div class="attackgui1">
 <p>Phase 1 attacks :</p>
 <left>
@@ -218,23 +222,7 @@
   text-align: center;
   box-shadow: 0 0 20px #5c00ff;
 }
-.dialogue{
-   color: #694bf6;
-   font-size: 40px;
-  -webkit-text-stroke-width: 0.5px; /* Sets the outline width */
-  -webkit-text-stroke-color: black; /* Sets the outline color */
-   font-weight: bold;
-    width: 100%;
-  height: 100%;
-  pointer-events: none;
-  position: fixed;
-  display: flex;
-  top: 10%;
-  left: 0;
-  align-items: top;
-  justify-content: center;
-    z-index: 10;
-}
+
 .attackbars{
 display: flex;
 gap: 10px;
@@ -255,8 +243,9 @@ justify-content: center;
   background: #7a2cff;
 }
 .gui {
+  background-color: #888888;
   position: fixed;
-  height: 80px; /* same height as healthbar */
+  height: 10px; /* same height as healthbar */
 }
 
 .titlebar {
@@ -264,26 +253,44 @@ position: fixed;
 top: 0;
 left: 0;
 width: 100%;
-height: 80px;
+height: 60px;
 display: flex;
-justify-content: center;
+flex-direction: column;
+justify-content: flex-start;
 pointer-events: none;
-align-items: flex-start;
+align-items: center;
 }
 .healthbar {
   position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 80px;
 
   display: flex;
-  justify-content: center;
-  align-items: flex-start; /* or center */
+  justify-content: flex-start;
+  align-items: center;
 
   pointer-events: none;
   z-index: 10;
 }
+.dialogue{
+   padding-top: 80px;
+   color: #694bf6;
+   font-size: 40px;
+  -webkit-text-stroke-width: 0.5px; /* Sets the outline width */
+  -webkit-text-stroke-color: black; /* Sets the outline color */
+   font-weight: bold;
+    width: 100%;
+  height: 100%;
+  pointer-events: none;
+  position: fixed;
+  display: sticky;
+  top: 10%;
+  left: 0;
+  align-items: top;
+  justify-content: center;
+    z-index: 10;
+}
+
 </style>
 </html>
 
@@ -563,47 +570,128 @@ dialogue.textContent = ""
 }, 3500)
 }
 
-function burnfunction(life){
-return; ////////// too lazy to work on this ill remake the status effects into array
-
-damage = life * 0.5;
-lifecounter.style.color = "#d25e19";
-burnduration = 10;
-statuseffect.textContent += " Burned! (-0.5 extra life after " + burnduration + " seconds)";
-burn();
+///BURNNNNN
+let damagetotal = 0;
+let fire = 0;
+function burn(life){
+damage = (life*10)/20;
+damagetotal += damage;
+burnduration = 20;
+if (fire == 1){
+return;
 }
-
-
-
-function burn(){ intervalId3 = setInterval(burndurations, 1000);
-} 
+fire = 1;
+intervalId3 = setInterval(burndurations, 1000);
+const newBurn = document.createElement("div");
+newBurn.style.color = "#d25e19";
+statuseffect.appendChild(newBurn);
+newBurn.textContent = " Burned! ("+damagetotal+" life lost after " + burnduration + " seconds)";
 function burndurations(){
 if (burnduration === 1){
 clearInterval(intervalId3);
-lifelost += damage;
+lnumber -= damagetotal;
+lifenumber.textContent = lnumber;
+damagetotal = 0;
+damage = 0;
+fire = 0;
+newBurn.remove();
 }
 burnduration--;
-document.getElementById("statuseffect").textContent = " Burned! (-0.5 extra life after " + burnduration + " seconds)";
+newBurn.textContent = " Burned! ("+damagetotal+" life lost after " + burnduration + " seconds)";
 }
+} 
+//SLOWWW
+let slow = 0;
+let slowamt = 0;
+let intervalId4;
+let slowduration = 0;
+let intervalPmod = 0;
+function slowfunction(amt, duration){
+slowduration = duration;
+console.log(intervalP);
+slowamt += amt;
+intervalPmod = intervalP + intervalP*(slowamt/100);
+console.log(intervalPmod);
+if (slow == 1){
+return;
+}
+slow = 1;
+intervalId4 = setInterval(slowdurations, 1000);
+const newSlow = document.createElement("div");
+newSlow.style.color = "#2596be";
+statuseffect.appendChild(newSlow);
+newSlow.textContent = " Slowed! ("+slowamt+"% slower combospeed for " + slowduration + " seconds)";
+function slowdurations(){
+if (slowduration === 1){
+clearInterval(intervalId4);
+newSlow.remove();
+slow = 0;
+slowamt = 0;
+intervalPmod = 0;
+}
+slowduration--;
+newSlow.textContent = " Slowed! ("+slowamt+"% slower combospeed for " + slowduration + " seconds)";
+}
+} 
 
-burnfunction(1);
-function venomfunction(duration){
-lifecounter.style.color = "#00490c";
-statuseffect.textContent += " Poisoned! (-1 extra life if the next guess is wrong)"
+//WEAKENED
+let weakened = 0;
+let intervalId5;
+let weakenedduration = 0;
+function weakenedfunction(duration){
+weakenedduration = duration;
+if (weakened == 1){
+return;
+}
+weakened = 1;
+intervalId5 = setInterval(weakeneddurations, 1000);
+const newWeakened = document.createElement("div");
+newWeakened.style.color = "#a22b00";
+statuseffect.appendChild(newWeakened);
+newWeakened.textContent = " Weakened! (50% more damage taken for " + weakenedduration + " seconds)";
+function weakeneddurations(){
+if (weakenedduration === 1){
+clearInterval(intervalId5);
+newWeakened.remove();
+weakened = 0;
+}
+weakenedduration--;
+newWeakened.textContent = " Weakened! (50% more damage taken for " + weakenedduration + " seconds)";
+}
+} 
+
+
+
+
+//VENOMMM
+let venomCounter = 0;
+function venomfunction(remove, duration){
+if (remove == 1) {
+    if (venom > 0) {
+      venom--;
+
+      const lastDiv = document.getElementById("NVD" + (venomCounter - 1));
+      if (lastDiv) {
+        lastDiv.remove();
+        venomCounter--;
+        console.log("removed");
+      }
+    }
+    return;
+  }
+const NewvenomDiv = document.createElement("div");
+NewvenomDiv.id = "NVD"+venomCounter;
+venomCounter++;
+console.log(NewvenomDiv);
+const statuseffect = document.getElementById("statuseffect");
+NewvenomDiv.style.color = "#00490c";
+NewvenomDiv.textContent = " Poisoned! (-1 extra life if the next guess is wrong)"
 venom =+ duration;
-}
-
-function cleanse(){
-if (venom !== 1){
-venom--;
-}
-else{
-venom--;
-lifecounter.style.color = "#000000"
-statuseffect.textContent = ""; //////////// MAKE SURE TO CHANGE THIS SO IT CAN WORK WITH OTHER EFFECTS
-}
+statuseffect.appendChild(NewvenomDiv);
+console.log("venom :"+ venom);
 
 }
+
 
 function EveningShade(){
 ESduration--;
@@ -675,7 +763,6 @@ else if (phase == 4){
 function stricken(){
 console.log("noob");
 lnumber -= 0.5;
-lifenumber.textContent = lnumber;
 lifenews.style.color = "#5d00c8";
 lifenews.textContent = " Flamestruck! (-0.5 life)";
 setTimeout(function(){lifenews.textContent = "";}, 2000);
@@ -698,6 +785,9 @@ return;}}
 if (currentCombo.includes("WF") && code == "WF"){
 	createWF();
 	}
+else if (currentCombo.includes("Redirect") && code == "Redirect"){
+	redirect();
+	}
 if (WFstate == true){
 stricken();
 }
@@ -712,7 +802,7 @@ guessattempt = false;
 }
 
 randomCombo();
-
+/////// CHECK //////////////////////!!!?////////////////////////////////
 function check(){
 console.log("guess:", JSON.stringify(guess));
 console.log("current:", JSON.stringify(currentCombo));
@@ -734,13 +824,19 @@ break;
 }
 }
 if (ans === 1){
-cleanse();
+venomfunction(1, 0);
 damagemultiplier = ((timerP - (timerP - timer)) / timerP) * 2
 damagenumber = Math.floor(350000 + (350000 * damagemultiplier));
 damagecarn(damagenumber);
 msg.textContent = "Correct!";
 damagedisplay.textContent = " (Damage dealt: "+damagenumber+") ";
 damagemultidisplay.textContent = "(" + (1+damagemultiplier) + "x)";
+extralife++;
+if (extralife == 5){ ///////////////////////////// extra life
+lnumber = Number(lnumber) + 1;
+extralife = 0;
+lifenumber.textContent = lnumber;
+}
 
 setTimeout(function (){
 damagedisplay.textContent = "";
@@ -749,20 +845,24 @@ damagemultidisplay.textContent = "";
 }
 else{
 msg.textContent = "wrong lozer";
-
+extralife = 0;
 
 if (venom > 0){
 console.log("activated");
 lifelost += 1;
-cleanse();
+venomfunction(1, 0);
 }
 
 if (currentCombo.includes("Romeida")){
-venomfunction(1);
+venomfunction(0, 1);
 }
 
 if (currentCombo.includes("SF")){
-burnfunction(1);
+burn(1);
+}
+
+if (currentCombo.includes("DS")){
+slowfunction(50, 15);
 }
 
 if (currentCombo.includes("Decap")){
@@ -870,8 +970,15 @@ newImg.onload = function(){
 container.appendChild(newImg);
 i++;
 console.log(i)
+if (intervalPmod > 0){
+setTimeout(function(){imgcombo(combo)}, intervalPmod);
+}
+else
+{
 setTimeout(function(){imgcombo(combo)}, intervalP);
 };
+}
+
 }
 
 }
@@ -972,6 +1079,9 @@ button.style.display = "inline-block";
 }
 function damagecarn(x){
 healthval -= x;
+if (weakened == 1){
+healthval += x/2; ///////////// remind me to add the visual cue for the weakened damage
+}
 health.textContent = healthval;
 if (healthval <= 11000000 && phasechange2 !== "done"){
 nextphase();

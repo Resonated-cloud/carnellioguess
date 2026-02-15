@@ -142,7 +142,8 @@
 <button onclick="venomfunction(0, 1)">venom test</button>
 <button onclick="burn(1)">burn test</button>
 <button onclick="slowfunction(50, 15)">slow test</button>
-<button onclick="weakenedfunction(20)">slow test</button>
+<button onclick="weakenedfunction(20)">Weakened test</button>
+<button onclick="Healblockfunction(15)">Healblock test</button>
 <div class="attackgui1">
 <p>Phase 1 attacks :</p>
 <left>
@@ -184,7 +185,14 @@
 <button id ="EF" style="display: none"; class="attack" onclick="attack('Evil Fracture', 'EF')">Evil Fracture</button>
 </div>
 </div>
-
+<div class="attackgui5">
+<p id = "phase5text" style="display: none";>Phase 5 Attacks :</p>
+<div class="attackbars">
+<button id ="NR" style="display: none"; class="attack" onclick="attack('Nightmare Reign', 'NR')">Nightmare Reign</button>
+<button id ="FH" style="display: none"; class="attack" onclick="attack('Fatal Howl', 'FH')">Fatal Howl</button>
+<button id ="DrinkardS" style="display: none; color:"#5d00c8"; class="attack" onclick="attack('Drinkard Shade', 'DrinkardS')">Drinkard Shade</button>
+</div>
+</div>
 <style>
 .overlay {
   position: fixed;
@@ -314,8 +322,12 @@ let timerP = 160;
 let phasechange2;
 let phasechange3;
 let phasechange4;
+let phasechange5;
+let funeral;
+let funeralc = 0;
 let guessattempt = false;
 let p4initial;
+let p5initial;
 let intervalP = 1000;
 let intervalId3;
 let dialogue = document.getElementById("dialogue");
@@ -381,7 +393,8 @@ document.getElementById("loading").style.display = "flex";
 Promise.all([
   loadsound('songs/Newworldorder.mp3'),
   loadsound('songs/Foralltheuniverse.mp3'),
-  loadsound('songs/Blooddraina.mp3')
+  loadsound('songs/Blooddraina.mp3'),
+  loadsound('songs/Burningouttheblue.mp3')
 ]).then(() => {
   document.getElementById("loading").style.display = "none";
   timerloop();
@@ -396,6 +409,9 @@ const p2Combos = {A : ["SV", "DR"], B: ["SS", "SV", "DS"], C: ["DS", "VV"], D: [
 const p3Combos = {A : ["Summon", "SS", "Romeida", "SV", "DS"], B: ["Summon", "Mawaru", "Redirect", "BD"], C: ["Summon", "SF", "Romeida", "DS"], D: ["Summon", "Mawaru", "Romeida", "VV"], E: ["VV", "Dash", "SS", "DS"], F: ["SS", "SV", "DR", "DS"], G: ["Summon", "SF", "Mawaru", "Redirect", "BD"], H: ["Summon", "SF", "Redirect", "BD"], I: ["Summon", "Mawaru", "Redirect", "Romeida"], J: ["Dash", "DR", "SV", "DS"], K: ["SF", "DR", "DS", "Fakeout"]};
 const p4Combos = {A : ["SS", "SV", "DR", "SV", "DS"], B : ["Dash", "Summon", "Redirect", "Romeida", "SR"], C: ["Fakeout", "DS", "Summon", "EF", "VV"], D:["Fakeout", "VV", "Summon", "Redirect", "Romeida"], E:["Summon", "EF", "Decap", "Dash", "SR"], F:["Summon", "SS", "SV", "DR", "SV", "ES"], G:["VV", "Summon", "DB", "BD", "WF"], H:["Dash", "Summon", "SF", "DB", "Romeida"], I:["Fakeout", "Summon", "SF", "ES", "SR"], J:["SF", "Summon", "DB", "Redirect", "ES", "SR"], K:["Summon", "Mawaru", "Romeida", "Summon", "DB", "BD"], L:["Summon", "DR", "SV", "DB", "ES"], M:["SF", "Summon", "Mawaru", "Redirect", "EF"], N:["TR", "SS", "SV", "DR", "DS"]}
 const p4Initials = {A : ["Dash", "Fakeout", "VV", "Summon", "Mawaru", "Redirect", "DB", "ES", "SR"]}
+const p5Combos = {A : ["Summon", "DB", "Romeida", "Fakeout", "SR", "Decap"], B : ["Summon", "DB", "Romeida", "Fakeout", "SR", "Decap"]}
+const p5Initials = {A : ["Summon", "Mawaru", "Redirect", "SF", "Mawaru", "Redirect", "Romeida", "Fakeout", "FH", "VV", "Decap", "Dash", "Summon", "NR", "ES"]}
+const funeralcombo = {A : ["DR", "DS", "DR", "Summon", "Redirect", "Redirect", "Mawaru", "NR", "TR", "Decap", "FH", "SS", "SR", "Redirect", "SR", "DR", "Mawaru", "Redirect", "NR", "TR", "DR", "WF", "BD"]}
 let ans = 0;
 ///
 let lnumber = document.getElementById("life1").textContent; /// its life number.. but number.. so lifenumbernumber??
@@ -471,6 +487,7 @@ dialogue.textContent = "";
 counter = false;
 }, 5000)
 }
+
 //Redirect Attack
   const attackbuttons = ["SS", "TR", "WF", "Decap", "VV"];
 function redirect() {
@@ -557,7 +574,8 @@ counter = false;
 dialogue.textContent = "End of days,"
 setTimeout(function(){
 dialogue.textContent = "Shadow Riposte!";
-lnumber -= 2;
+damageplayer(2);
+Healblockfunction(45);
 lifenumber.textContent = lnumber;
 lifenews.style.color = "#5d00c8";
 lifenews.textContent = " Counterattacked! (-2 lives)";
@@ -589,7 +607,7 @@ newBurn.textContent = " Burned! ("+damagetotal+" life lost after " + burnduratio
 function burndurations(){
 if (burnduration === 1){
 clearInterval(intervalId3);
-lnumber -= damagetotal;
+damageplayer(damagetotal);
 lifenumber.textContent = lnumber;
 damagetotal = 0;
 damage = 0;
@@ -622,7 +640,7 @@ newSlow.style.color = "#2596be";
 statuseffect.appendChild(newSlow);
 newSlow.textContent = " Slowed! ("+slowamt+"% slower combospeed for " + slowduration + " seconds)";
 function slowdurations(){
-if (slowduration === 1){
+if (slowduration < 1){
 clearInterval(intervalId4);
 newSlow.remove();
 slow = 0;
@@ -648,7 +666,7 @@ intervalId5 = setInterval(weakeneddurations, 1000);
 const newWeakened = document.createElement("div");
 newWeakened.style.color = "#a22b00";
 statuseffect.appendChild(newWeakened);
-newWeakened.textContent = " Weakened! (50% more damage taken for " + weakenedduration + " seconds)";
+newWeakened.textContent = " Weakened! (50% less damage dealt & more damage taken for " + weakenedduration + " seconds)";
 function weakeneddurations(){
 if (weakenedduration === 1){
 clearInterval(intervalId5);
@@ -656,7 +674,7 @@ newWeakened.remove();
 weakened = 0;
 }
 weakenedduration--;
-newWeakened.textContent = " Weakened! (50% more damage taken for " + weakenedduration + " seconds)";
+newWeakened.textContent = " Weakened! (50% less damage dealt & more damage taken for " + weakenedduration + " seconds)";
 }
 } 
 
@@ -691,8 +709,32 @@ statuseffect.appendChild(NewvenomDiv);
 console.log("venom :"+ venom);
 
 }
-
-
+/// HEALBLOCKKKKKKKKKKKKKKKKKKK
+let HBduration = 0;
+let Healblock = 0;
+let intervalId6;
+function Healblockfunction(duration){
+HBduration += duration
+if (Healblock == 1){
+return;
+}
+Healblock = 1;
+intervalId6 = setInterval(Healblockdurations, 1000);
+const newHealblock = document.createElement("div");
+newHealblock.style.color = "#000000";
+statuseffect.appendChild(newHealblock);
+newHealblock.textContent = " Healblocked! (Prevents life bonus for "+HBduration+" seconds.)"
+function Healblockdurations(){
+if (HBduration === 1){
+clearInterval(intervalId6);
+Healblock = 0;
+newHealblock.remove();
+HBduration = 0;
+}
+HBduration--;
+newHealblock.textContent = " Healblocked! (Prevents life bonus for "+HBduration+" seconds.)"
+}
+} 
 function EveningShade(){
 ESduration--;
 	if (currentCombo.includes("ES")){
@@ -739,10 +781,25 @@ else if (phase == 4){
 	p4initial = "done";
 	}
 }
+else if (phase == 5){
+	comboname = p5Combos;
+	timerP = 160;
+	if (p5initial !== "done"){
+	timerP = 460;
+	comboname = p5Initials;
+	p5initial = "done";
+	}
+	if (funeralc == 1){
+	timerP = 770;
+	comboname = funeralcombo;
+        funeralc = 2;
+	}
+}
 	
 	
 	let Ckeys = Object.keys(comboname); 
 	const half = Math.ceil(Ckeys.length / 2);
+        if(funeralc !== 1){
 	if (ESNearstate == true){
 		Ckeys = Ckeys.slice(0, half);
 		console.log(Ckeys);
@@ -751,6 +808,7 @@ else if (phase == 4){
 		Ckeys = Ckeys.slice(half, Ckeys.length);
 		console.log(Ckeys);
 	}
+        }
 	const randomKey = Ckeys[Math.floor(Math.random() * Ckeys.length)];
 	currentCombo = comboname[randomKey];
 		EveningShade();
@@ -762,7 +820,8 @@ else if (phase == 4){
 
 function stricken(){
 console.log("noob");
-lnumber -= 0.5;
+damageplayer(0.5);
+Healblockfunction(6);
 lifenews.style.color = "#5d00c8";
 lifenews.textContent = " Flamestruck! (-0.5 life)";
 setTimeout(function(){lifenews.textContent = "";}, 2000);
@@ -825,17 +884,18 @@ break;
 }
 if (ans === 1){
 venomfunction(1, 0);
-damagemultiplier = ((timerP - (timerP - timer)) / timerP) * 2
+damagemultiplier = (((timerP - (timerP - timer)) / timerP))
 damagenumber = Math.floor(350000 + (350000 * damagemultiplier));
 damagecarn(damagenumber);
 msg.textContent = "Correct!";
 damagedisplay.textContent = " (Damage dealt: "+damagenumber+") ";
 damagemultidisplay.textContent = "(" + (1+damagemultiplier) + "x)";
+if (Healblock !== 1){
 extralife++;
 if (extralife == 5){ ///////////////////////////// extra life
-lnumber = Number(lnumber) + 1;
+healplayer(1);
 extralife = 0;
-lifenumber.textContent = lnumber;
+}
 }
 
 setTimeout(function (){
@@ -849,8 +909,36 @@ extralife = 0;
 
 if (venom > 0){
 console.log("activated");
-lifelost += 1;
+damageplayer(1);
 venomfunction(1, 0);
+}
+if (currentCombo.includes("VV")){
+Healblockfunction(6);
+}
+if (currentCombo.includes("SS")){
+Healblockfunction(6);
+}
+if (currentCombo.includes("DS")){
+Healblockfunction(6);
+}
+if (currentCombo.includes("DR")){
+Healblockfunction(6);
+}
+if(currentCombo.includes("SV")){
+Healblockfunction(6);
+}
+if(currentCombo.includes("DB")){
+Healblockfunction(6);
+}
+if(currentCombo.includes("BD")){
+Healblockfunction(6);
+}
+if(currentCombo.includes("DrinkardS")){
+Healblockfunction(6);
+}
+if(currentCombo.includes("Mawaru")){
+Healblockfunction(6);
+weakenedfunction(15);
 }
 
 if (currentCombo.includes("Romeida")){
@@ -872,21 +960,19 @@ setTimeout(function() {
     DecapSound.pause();
     DecapSound.currentTime = 39;
   }, 1000);
-lifelost += 3;
+damageplayer(3);
+damagecarn(-30000);
 lifenews.style.color = "#8e0000";
 lifenews.textContent += " Decapitated! (-3 Lives)"
 setTimeout(function (){lifenews.textContent =  "";
 }, 3000)
 }
 else{
-lifelost += 1;
+damageplayer(1);
 }
-lnumber = lnumber - lifelost;
-lifenumber.textContent = lnumber;
 }
 timer = 40;
-state = "stop";
-lifelost = 0;
+state = "stop"
 }
 i = 0;
 function imgcombo(combo){
@@ -963,6 +1049,15 @@ var imageUrl = 'images/SR.webp';
 else if (atkname == "EF"){
 var imageUrl = 'images/EF.webp';
 }
+else if (atkname == "FH"){
+var imageUrl = 'images/FH.webp';
+}
+else if (atkname == "NR"){
+var imageUrl = 'images/NR.webp';
+}
+else if (atkname == "DrinkardS"){
+var imageUrl = 'images/DrinkardS.webp';
+}
 newImg.src = imageUrl;
 newImg.width = 75;
 newImg.height = 75;
@@ -1012,6 +1107,8 @@ timerloop();
 function nextphase(){
 phase += 1;
 if (phase == 2){
+healplayer(1);
+lifenumber.textContent = lnumber;
 phasechange2 = "done";
 bgmchange('songs/Newworldorder.mp3', 0.25, 0);
 attackbuttons.push("SV", "DS", "SF", "DR");
@@ -1027,6 +1124,8 @@ showButtons('DR');
 document.getElementById("phase2text").style.display = "inline-block";
 }
 if (phase == 3){
+healplayer(1);
+lifenumber.textContent = lnumber;
 bgmchange('songs/Foralltheuniverse.mp3', 0.25, 17.3);
 attackbuttons.push("BD", "Summon", "Mawaru", "Romeida");
 phasechange3 = "done";
@@ -1047,6 +1146,7 @@ document.getElementById("phase3text").style.display = "inline-block";
 }
 
 if (phase == 4){
+healplayer(1);
 phasechange4 = "done";
 attackbuttons.push("SR", "EF", "DB", "ES");
 bgmchange('songs/Blooddraina.mp3', 0.25, 0);
@@ -1067,20 +1167,68 @@ showButtons('ES');
 showButtons('SR');
 showButtons('DB');
 document.getElementById("phase4text").style.display = "inline-block";
+
+}
+
+if (phase == 5){
+healplayer(1);
+phasechange5 = "done";
+attackbuttons.push("NR", "FH", "DrinkardS");
+bgmchange('songs/Burningouttheblue.mp3', 0.25, 1);
+timerP = 400;
+intervalP = 200;
+dialogue.textContent = "That's it.";
+setTimeout(function(){dialogue.textContent = "All of this.";
+}, 3000)
+setTimeout(function(){dialogue.textContent = "All of this. Shall end.";
+}, 5000)
+setTimeout(function(){dialogue.textContent = "Right Now.";
+}, 7000)
+setTimeout(function(){dialogue.textContent = "";
+}, 10000)
+
+showButtons('NR');
+showButtons('FH');
+showButtons('DrinkardS');
+document.getElementById("phase5text").style.display = "inline-block";
+}
+}
+function phasefuneral(){
+funeral = "done";
+setTimeout(function(){dialogue.textContent = "Your funeral";
+bgm.currentTime = 153}, 3000)
+setTimeout(function(){dialogue.textContent = "Your funeral.";
+}, 4000)
+setTimeout(function(){dialogue.textContent = "Your funeral..";
+}, 5000)
+setTimeout(function(){dialogue.textContent = "Your funeral..";
+}, 5000)
+setTimeout(function(){dialogue.textContent = "Your funeral...";
+}, 6000)
+setTimeout(function(){dialogue.textContent = "";
+}, 9000)
+funeralc = 1;
 }
 
 
-}
+
+
 function showButtons(name){
 let button = document.getElementById(name);
 button.style.width = "120px";
 button.style.height = "30px";
 button.style.display = "inline-block";
 }
+///////DAMAGE CARNNNNNNNNNNNNNNNNNN
 function damagecarn(x){
+if (funeralc == 2){
+healthval -= x/5; ///////////// evil
+}
+else if (weakened == 1){
+healthval -= x/2; ///////////// remind me to add the visual cue for the weakened damage
+}
+else{
 healthval -= x;
-if (weakened == 1){
-healthval += x/2; ///////////// remind me to add the visual cue for the weakened damage
 }
 health.textContent = healthval;
 if (healthval <= 11000000 && phasechange2 !== "done"){
@@ -1091,6 +1239,14 @@ nextphase();
 }
 if (healthval <= 6505000 && phasechange4 !== "done"){
 nextphase();
+}
+if (healthval <= 3550000 && phasechange5 !== "done"){
+nextphase();
+}
+if (healthval <= 600000 && funeral !== "done"){
+healthval = 600000;
+health.textContent = healthval;
+phasefuneral();
 }
 }
 function final(){
@@ -1113,6 +1269,24 @@ openPopup(
 function closePopup() {
   document.getElementById("popupOverlay").style.display = "none";
   loadBGM();
+}
+
+function damageplayer(x)
+{
+lnumber -= x;
+if (weakened == 1){
+lnumber -= (x*10)/20
+}
+lifenumber.textContent = lnumber;
+}
+
+function healplayer(x)
+{
+if (Healblock == 1){
+return;
+}
+lnumber = Number(lnumber) + x;
+lifenumber.textContent = lnumber;
 }
 
 

@@ -25,7 +25,8 @@
   <!-- Popup box -->
   <div class="Update_Log">
     <h2 id="UpdateLogTitle">Update Log</h2>
-    <p id="UpdateLogText">PATCH 04/02/2026: "I can upload musics wow!"<br></br>Misc : Added audio Musics from phase 1 - 4 (music setting will be added soon)<br></br>Misc : Added audio for Decapitate fail.<br></br>(!!!) Added Wandering Flame mechanic (still WIP in term of design.)<br></br>Nerfed Evil Fracture click req: 10 -> 8 clicks<br>Evil Fracture Time Compensation: 4 -> 5 seconds.<br></br>Bugfix : Fixed image loading lately, therefore leading to misarranged combos.<br></br>Bugfix : Fixed Timer keeps going down despite opening Update Log.
+    <p id="UpdateLogText">PATCH 18/02/2026: "I'VE HAD ENOUGH OF THIS P5 DELAY!"<br></br>Misc : Added audio music for Phase 5.<br></br>Misc : Changed Healthbar so it floats wowowow <br></br>Rewrote status effects code.<br><br>Added multitude of new status effects to obliterate you! Find out yourself.<br></br><!!!> Added PHASE 5. (Nightmare Reign is coming soon)<br></br>Added Desperation phase after funeral combo (gain 75% resistance for the rest of the battle).<br></br>Added extra life systems for 5 consecutive correct guesses and each phase change<br></br>Nerfed Player Damage from 3x multi to 2x multi.<br></br>Bugfix : Fixed initial combos commiting death when Evening Shade's buff exist.
+	<br></br>PATCH 04/02/2026: "I can upload musics wow!"<br></br>Misc : Added audio Musics from phase 1 - 4 (music setting will be added soon)<br></br>Misc : Added audio for Decapitate fail.<br></br>(!!!) Added Wandering Flame mechanic (still WIP in term of design.)<br></br>Nerfed Evil Fracture click req: 10 -> 8 clicks<br>Evil Fracture Time Compensation: 4 -> 5 seconds.<br></br>Bugfix : Fixed image loading lately, therefore leading to misarranged combos.<br></br>Bugfix : Fixed Timer keeps going down despite opening Update Log.
 
 <br></br>-- PATCH 02/02/2026: "hello QTE" -- <br></br> Misc : Added a temporary Popup when you open the website <br></br>Misc : Added Update Log (no shit)<br></br>Changed Evil Fracture mechanic to a QTE spam. (original EF Mechanic will be moved to other attack.)<br></br>Evil Fracture Compensation time is only 4 extra seconds now.<br></br>Shadow Riposte now counterattacks you if you send during the counter.<br></br>Bugfix : Fixed Timer Handling giving extra 4 seconds every single time (oops)</p>
 
@@ -123,7 +124,7 @@
 <div id = "imgattack">
 </div>
 <p>What's this attack called?</p>
-<p id="timerlabel"><span id = "timer">150</span><span id="timerstatus"></span></p> 
+<p id="timerlabel"><span id = "timer">150</span><span id="timerstatus"></span><span id= "FHbar"></span></p> 
 </center>
 <p id="lifecounter">Life: <span id="life1">5</span> / <span id="life2">5</span><span id="lifenews"></span><span id="statuseffect"></span></p> 
 <center>
@@ -144,6 +145,8 @@
 <button onclick="slowfunction(50, 15)">slow test</button>
 <button onclick="weakenedfunction(20)">Weakened test</button>
 <button onclick="Healblockfunction(15)">Healblock test</button>
+<button onclick="stunfunction(15)">stun test</button>
+<button onclick="FatalHowl()">FH test</button>
 <div class="attackgui1">
 <p>Phase 1 attacks :</p>
 <left>
@@ -409,9 +412,9 @@ const p2Combos = {A : ["SV", "DR"], B: ["SS", "SV", "DS"], C: ["DS", "VV"], D: [
 const p3Combos = {A : ["Summon", "SS", "Romeida", "SV", "DS"], B: ["Summon", "Mawaru", "Redirect", "BD"], C: ["Summon", "SF", "Romeida", "DS"], D: ["Summon", "Mawaru", "Romeida", "VV"], E: ["VV", "Dash", "SS", "DS"], F: ["SS", "SV", "DR", "DS"], G: ["Summon", "SF", "Mawaru", "Redirect", "BD"], H: ["Summon", "SF", "Redirect", "BD"], I: ["Summon", "Mawaru", "Redirect", "Romeida"], J: ["Dash", "DR", "SV", "DS"], K: ["SF", "DR", "DS", "Fakeout"]};
 const p4Combos = {A : ["SS", "SV", "DR", "SV", "DS"], B : ["Dash", "Summon", "Redirect", "Romeida", "SR"], C: ["Fakeout", "DS", "Summon", "EF", "VV"], D:["Fakeout", "VV", "Summon", "Redirect", "Romeida"], E:["Summon", "EF", "Decap", "Dash", "SR"], F:["Summon", "SS", "SV", "DR", "SV", "ES"], G:["VV", "Summon", "DB", "BD", "WF"], H:["Dash", "Summon", "SF", "DB", "Romeida"], I:["Fakeout", "Summon", "SF", "ES", "SR"], J:["SF", "Summon", "DB", "Redirect", "ES", "SR"], K:["Summon", "Mawaru", "Romeida", "Summon", "DB", "BD"], L:["Summon", "DR", "SV", "DB", "ES"], M:["SF", "Summon", "Mawaru", "Redirect", "EF"], N:["TR", "SS", "SV", "DR", "DS"]}
 const p4Initials = {A : ["Dash", "Fakeout", "VV", "Summon", "Mawaru", "Redirect", "DB", "ES", "SR"]}
-const p5Combos = {A : ["Summon", "DB", "Romeida", "Fakeout", "SR", "Decap"], B : ["Summon", "DB", "Romeida", "Fakeout", "SR", "Decap"]}
-const p5Initials = {A : ["Summon", "Mawaru", "Redirect", "SF", "Mawaru", "Redirect", "Romeida", "Fakeout", "FH", "VV", "Decap", "Dash", "Summon", "NR", "ES"]}
-const funeralcombo = {A : ["DR", "DS", "DR", "Summon", "Redirect", "Redirect", "Mawaru", "NR", "TR", "Decap", "FH", "SS", "SR", "Redirect", "SR", "DR", "Mawaru", "Redirect", "NR", "TR", "DR", "WF", "BD"]}
+const p5Combos = {A : ["Summon", "DB", "Romeida", "Fakeout", "SR", "Decap"], B : ["Summon", "DB", "SF", "Mawaru", "Redirect", "ES"], C:["Summon", "Mawaru", "SF", "Redirect", "DB", "NR", "Mawaru"], D:["Summon", "Mawaru", "SF", "Redirect", "DB", "BD"], E:["Summon", "Mawaru", "Mawaru", "Redirect", "EF", "TR", "Decap"], F:["SF", "Dash", "Summon", "Mawaru", "Redirect", "NR", "Mawaru"], G:["SF", "Fakeout", "Summon", "Mawaru", "Redirect", "ES", "FH"], H:["SF", "Summon", "DB", "Fakeout", "SR", "DR"], I:["TR", "Summon", "Mawaru", "EF", "DS", "SV", "DS"], J:["WF", "Summon", "Mawaru", "DB", "Mawaru", "Redirect", "Romeida"], K:["WF", "SF", "WF", "Summon", "DB", "Romeida"], L:["Fakeout", "Dash", "Fakeout", "SR", "SS", "SV", "DS"], M:["DS", "Summon", "Dash", "SR", "Mawaru", "Redirect", "ES"], N:["DS", "Decap", "Dash", "SS", "SV", "DR", "WF"], O:["Summon", "DB", "Redirect", "DS", "Mawaru", "Romeida"], P:["Summon", "Mawaru", "Romeida", "Dash", "VV", "DR", "Decap"], Q:["Summon", "Mawaru", "Romeida", "WF", "SV", "DS", "VV"], R:["Summon", "Mawaru", "EF", "TR", "Decap", "Fakeout"], S:["Summon", "Mawaru", "FH", "Redirect", "WF", "Mawaru", "Redirect", "ES"], T:["SS", "DS", "DR", "SV", "DS", "Decap"], U:["TR", "Fakeout", "FH", "Summon", "DB", "Mawaru", "Redirect", "ES"], V:["VV", "Summon", "Mawaru", "DS", "DrinkardS", "Fakeout", "SF"], W:["VV", "Summon", "TR", "Mawaru", "Redirect", "NR", "DB"]}
+const p5Initials = {A : ["Summon", "Mawaru", "Redirect", "SF", "Mawaru", "Redirect", "Romeida", "Fakeout", "FH", "VV", "Decap", "Dash", "Summon", "NR", "ES"]};
+const funeralcombo = {A : ["DR", "DS", "DR", "Summon", "Redirect", "Redirect", "Mawaru", "NR", "TR", "Decap", "FH", "SS", "SR", "Redirect", "SR", "DR", "Mawaru", "Redirect", "NR", "TR", "DR", "WF", "BD"]};
 let ans = 0;
 ///
 let lnumber = document.getElementById("life1").textContent; /// its life number.. but number.. so lifenumbernumber??
@@ -565,6 +568,80 @@ console.log(strike);
 
 WFlame();
   return {orbit, orbiter};
+}
+//////// FH
+let intervalId7;
+let FHtimer = 0;
+function FatalHowl(){
+FHtimer = 7;
+intervalId7 = setInterval(FHloop, 1000);
+const newFH = document.createElement("div");
+newFH.id = "newFH";
+newFH.style.fontWeight = 'bold';
+console.log(newFH.id);
+FHbar.appendChild(newFH);
+newFH.textContent = "Your DEATH arrives in: "+FHtimer+" seconds.";
+function FHloop(){
+FHtimer--;
+newFH.textContent = "Your DEATH arrives in: "+FHtimer+" seconds.";
+if (FHtimer === 1){
+dialogue.textContent = "I've had enough of this!";
+}
+if (FHtimer === 0){
+FHdeath();
+newFH.remove();
+}
+}
+}
+let intervalId8;
+let FHBtimer = 0;
+let FHB = 0;
+function FHbuff(){
+FHBtimer = 30;
+if (FHB == 1){
+return;
+}
+FHB = 1;
+intervalId8 = setInterval(FHBloop, 1000);
+const newFHB = document.createElement("div");
+FHbar.appendChild(newFHB);
+newFHB.style.color = "#e51b1b";
+newFHB.textContent = "Fatal Howl: "+FHBtimer+" seconds. (100% damage buff)";
+function FHBloop(){
+FHBtimer--;
+newFHB.textContent = "Fatal Howl: "+FHBtimer+" seconds. (100% damage buff)";
+if (FHBtimer === 0){
+newFHB.remove();
+FHB = 0;
+}
+}
+
+}
+
+function FHdeath(){
+stunfunction(40);
+clearInterval(intervalId);
+clearInterval(intervalId7);
+damageplayer(Number(5/10));
+dialogue.textContent = "This is gonna hurt";
+setTimeout(function(){dialogue.textContent += ".";}, 200);
+setTimeout(function(){dialogue.textContent += ".";}, 400);
+setTimeout(function(){dialogue.textContent += ".";}, 600);
+setTimeout(function(){damageplayer(Number(125/1000));}, 1375);
+setTimeout(function(){dialogue.textContent = "DIE,"; damageplayer(Number(125/1000));}, 1500);
+setTimeout(function(){damageplayer(Number(125/1000));}, 1625);
+setTimeout(function(){dialogue.textContent += " DIE"; damageplayer(Number(125/1000));}, 1750);
+setTimeout(function(){damageplayer(Number(125/1000));}, 1875);
+setTimeout(function(){dialogue.textContent += " DIE"; damageplayer(Number(125/1000));}, 2000);
+setTimeout(function(){damageplayer(Number(125/1000));}, 2125);
+setTimeout(function(){dialogue.textContent += " DIE!"; damageplayer(Number(125/1000));}, 2250);
+setTimeout(function(){dialogue.textContent = ""; damageplayer(3); timerloop();}, 3750);
+}
+
+function FHdelay(){
+FHtimer = 10;
+dialogue.textContent = "I've had enough of this!";
+setTimeout(function(){dialogue.textContent = ""}, 3000);
 }
 
 // SR counterattack
@@ -735,6 +812,32 @@ HBduration--;
 newHealblock.textContent = " Healblocked! (Prevents life bonus for "+HBduration+" seconds.)"
 }
 } 
+/// STUN ///
+let stunduration = 0;
+let stun = 0;
+let intervalId9;
+function stunfunction(duration){
+stunduration += duration
+if (stun == 1){
+return;
+}
+stun = 1;
+intervalId9 = setInterval(stundurations, 100);
+const newstun = document.createElement("div");
+newstun.style.color = "#000000";
+statuseffect.appendChild(newstun);
+newstun.textContent = " Stunned! (Unable to act for "+Number(stunduration/10)+" seconds.)";
+function stundurations(){
+if (stunduration === 1){
+clearInterval(intervalId9);
+newstun.remove();
+stun = 0;
+}
+stunduration--;
+newstun.textContent = " Stunned! (Unable to act for "+Number(stunduration/10)+" seconds.)";
+}
+} 
+/// ES!!!
 function EveningShade(){
 ESduration--;
 	if (currentCombo.includes("ES")){
@@ -783,14 +886,15 @@ else if (phase == 4){
 }
 else if (phase == 5){
 	comboname = p5Combos;
-	timerP = 160;
+	timerP = 180;
 	if (p5initial !== "done"){
-	timerP = 460;
+	timerP = 430;
 	comboname = p5Initials;
 	p5initial = "done";
 	}
 	if (funeralc == 1){
-	timerP = 770;
+        phasefuneral();
+	timerP = 740;
 	comboname = funeralcombo;
         funeralc = 2;
 	}
@@ -799,7 +903,6 @@ else if (phase == 5){
 	
 	let Ckeys = Object.keys(comboname); 
 	const half = Math.ceil(Ckeys.length / 2);
-        if(funeralc !== 1){
 	if (ESNearstate == true){
 		Ckeys = Ckeys.slice(0, half);
 		console.log(Ckeys);
@@ -807,14 +910,20 @@ else if (phase == 5){
 	else if (ESFarstate == true){
 		Ckeys = Ckeys.slice(half, Ckeys.length);
 		console.log(Ckeys);
+                if (Ckeys.length === 0) {
+    Ckeys = 'A';
+}
 	}
-        }
 	const randomKey = Ckeys[Math.floor(Math.random() * Ckeys.length)];
 	currentCombo = comboname[randomKey];
 		EveningShade();
 		EvilFracture();
 	if (currentCombo.includes("EF")){
 	timer += 50;
+}
+if (currentCombo.includes("FH")){
+	FatalHowl();
+        timer += 30;
 }
 }
 
@@ -830,7 +939,7 @@ setTimeout(function(){lifenews.textContent = "";}, 2000);
 
 ///
 function attack(name, code){
-if (state == "stop") {
+if (state == "stop" || stun == 1) {
     return;
  }
 else if (counter == true){
@@ -841,6 +950,9 @@ ShadowRiposte();
 }
 else{
 return;}}
+if (code == "FH" && currentCombo.includes("FH")){
+FHdelay();
+}
 if (currentCombo.includes("WF") && code == "WF"){
 	createWF();
 	}
@@ -850,7 +962,12 @@ else if (currentCombo.includes("Redirect") && code == "Redirect"){
 if (WFstate == true){
 stricken();
 }
-
+if (code == "DR"){
+stunfunction(10);
+}
+if (code == "VV"){
+stunfunction(5);
+}
 guessattempt = true;
 if (document.getElementById("atk").textContent === " "){
 document.getElementById("atk").textContent += name;}
@@ -865,7 +982,7 @@ randomCombo();
 function check(){
 console.log("guess:", JSON.stringify(guess));
 console.log("current:", JSON.stringify(currentCombo));
-if (state == "stop"){
+if (state == "stop" || stun == 1){
 return;
 }
 else if (counter == true){
@@ -874,6 +991,13 @@ return;
 }
 else if (WFstate == true){
 stricken();
+}
+if (currentCombo.includes("FH")){
+FHbuff();
+if (document.getElementById("newFH")){
+clearInterval(intervalId7);
+document.getElementById("newFH").remove();
+}
 }
 ans = 1;
 for(n=0; n <= guess.length; n++){
@@ -906,7 +1030,6 @@ damagemultidisplay.textContent = "";
 else{
 msg.textContent = "wrong lozer";
 extralife = 0;
-
 if (venom > 0){
 console.log("activated");
 damageplayer(1);
@@ -923,9 +1046,11 @@ Healblockfunction(6);
 }
 if (currentCombo.includes("DR")){
 Healblockfunction(6);
+stunfunction(30);
 }
 if(currentCombo.includes("SV")){
 Healblockfunction(6);
+stunfunction(10);
 }
 if(currentCombo.includes("DB")){
 Healblockfunction(6);
@@ -943,6 +1068,7 @@ weakenedfunction(15);
 
 if (currentCombo.includes("Romeida")){
 venomfunction(0, 1);
+stunfunction(50);
 }
 
 if (currentCombo.includes("SF")){
@@ -953,6 +1079,12 @@ if (currentCombo.includes("DS")){
 slowfunction(50, 15);
 }
 
+if (currentCombo.includes("DrinkardS")){
+Healblockfunction(6);
+healthval += 250000;
+health.textContent = healthval;
+}
+
 if (currentCombo.includes("Decap")){
 DecapSound.currentTime = 39;
 DecapSound.play();
@@ -961,7 +1093,8 @@ setTimeout(function() {
     DecapSound.currentTime = 39;
   }, 1000);
 damageplayer(3);
-damagecarn(-30000);
+healthval = 30000 + Number(healthval);
+health.textContent = healthval;
 lifenews.style.color = "#8e0000";
 lifenews.textContent += " Decapitated! (-3 Lives)"
 setTimeout(function (){lifenews.textContent =  "";
@@ -1196,18 +1329,17 @@ document.getElementById("phase5text").style.display = "inline-block";
 function phasefuneral(){
 funeral = "done";
 setTimeout(function(){dialogue.textContent = "Your funeral";
-bgm.currentTime = 153}, 3000)
+bgm.currentTime = 153}, 1)
 setTimeout(function(){dialogue.textContent = "Your funeral.";
-}, 4000)
+}, 1000)
 setTimeout(function(){dialogue.textContent = "Your funeral..";
-}, 5000)
+}, 1500)
 setTimeout(function(){dialogue.textContent = "Your funeral..";
-}, 5000)
+}, 2000)
 setTimeout(function(){dialogue.textContent = "Your funeral...";
-}, 6000)
+}, 2500)
 setTimeout(function(){dialogue.textContent = "";
-}, 9000)
-funeralc = 1;
+}, 5500)
 }
 
 
@@ -1222,7 +1354,7 @@ button.style.display = "inline-block";
 ///////DAMAGE CARNNNNNNNNNNNNNNNNNN
 function damagecarn(x){
 if (funeralc == 2){
-healthval -= x/5; ///////////// evil
+healthval -= x/4; ///////////// evil
 }
 else if (weakened == 1){
 healthval -= x/2; ///////////// remind me to add the visual cue for the weakened damage
@@ -1246,7 +1378,7 @@ nextphase();
 if (healthval <= 600000 && funeral !== "done"){
 healthval = 600000;
 health.textContent = healthval;
-phasefuneral();
+funeralc = 1;
 }
 }
 function final(){
@@ -1270,13 +1402,17 @@ function closePopup() {
   document.getElementById("popupOverlay").style.display = "none";
   loadBGM();
 }
-
+let damagenumber = 0;
 function damageplayer(x)
 {
-lnumber -= x;
-if (weakened == 1){
-lnumber -= (x*10)/20
+damagenumber = x;
+if (FHB == 1){
+damagenumber += damagenumber;
 }
+if (weakened == 1){
+damagenumber += (damagenumber*10)/20
+}
+lnumber -= damagenumber;
 lifenumber.textContent = lnumber;
 }
 

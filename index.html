@@ -636,9 +636,13 @@ setTimeout(function(){dialogue.textContent += " DIE"; damageplayer(Number(125/10
 setTimeout(function(){damageplayer(Number(125/1000));}, 2125);
 setTimeout(function(){dialogue.textContent += " DIE!"; damageplayer(Number(125/1000));}, 2250);
 setTimeout(function(){dialogue.textContent = ""; damageplayer(3); timerloop();}, 3750);
+	setTimeout(FatalHowl(), 5000);
 }
 
 function FHdelay(){
+	if (FHtimer > 5)
+	{return;
+	}
 FHtimer = 10;
 dialogue.textContent = "I've had enough of this!";
 setTimeout(function(){dialogue.textContent = ""}, 3000);
@@ -1427,6 +1431,7 @@ lifenumber.textContent = lnumber;
 
 
 </script>
+
 
 
 

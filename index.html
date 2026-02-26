@@ -643,10 +643,9 @@ function FHdelay(){
 	if (FHtimer > 4) 
 	{
 		const warningFH = document.createElement("div");
-warningFH.style.fontWeight = 'bold';
 FHbar.appendChild(warningFH);
 warningFH.textContent = "Too Early! (wait under 5 seconds)";
-		stunfunction(1);
+		stunfunction(10);
 setTimeout(function(){warningFH.remove();}, 1000);
 		return;
 	}
@@ -897,9 +896,9 @@ else if (phase == 4){
 }
 else if (phase == 5){
 	comboname = p5Combos;
-	timerP = 180;
+	timerP = 170;
 	if (p5initial !== "done"){
-	timerP = 430;
+	timerP = 410;
 	comboname = p5Initials;
 	p5initial = "done";
 	}
@@ -1439,6 +1438,7 @@ lifenumber.textContent = lnumber;
 
 
 </script>
+
 
 
 

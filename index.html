@@ -617,7 +617,7 @@ FHB = 0;
 }
 
 }
-
+let FHrepeat;
 function FHdeath(){
 stunfunction(40);
 clearInterval(intervalId);
@@ -636,7 +636,7 @@ setTimeout(function(){dialogue.textContent += " DIE"; damageplayer(Number(125/10
 setTimeout(function(){damageplayer(Number(125/1000));}, 2125);
 setTimeout(function(){dialogue.textContent += " DIE!"; damageplayer(Number(125/1000));}, 2250);
 setTimeout(function(){dialogue.textContent = ""; damageplayer(3); timerloop();}, 3750);
-let FHrepeat = setTimeout(function(){FatalHowl();}, 10750);
+FHrepeat = setTimeout(function(){FatalHowl();}, 10750);
 }
 
 function FHdelay(){
@@ -1439,6 +1439,7 @@ lifenumber.textContent = lnumber;
 
 
 </script>
+
 
 
 

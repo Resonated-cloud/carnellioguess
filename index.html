@@ -417,7 +417,7 @@ const p5Initials = {A : ["Summon", "Mawaru", "Redirect", "SF", "Mawaru", "Redire
 const funeralcombo = {A : ["DR", "DS", "DR", "Summon", "Redirect", "Redirect", "Mawaru", "NR", "TR", "Decap", "FH", "SS", "SR", "Redirect", "SR", "DR", "Mawaru", "Redirect", "NR", "TR", "DR", "WF", "BD"]};
 let ans = 0;
 ///
-let lnumber = document.getElementById("life1").textContent; /// its life number.. but number.. so lifenumbernumber??
+let lnumber = document.getElementById("life1").textContent; /// its life number's number.. so lifenumbernumber??
 let currentCombo;
 let atk = document.getElementById("atk").textContent;
 ///
@@ -636,12 +636,19 @@ setTimeout(function(){dialogue.textContent += " DIE"; damageplayer(Number(125/10
 setTimeout(function(){damageplayer(Number(125/1000));}, 2125);
 setTimeout(function(){dialogue.textContent += " DIE!"; damageplayer(Number(125/1000));}, 2250);
 setTimeout(function(){dialogue.textContent = ""; damageplayer(3); timerloop();}, 3750);
-	setTimeout(FatalHowl(), 5000);
+let FHrepeat = setTimeout(function{FatalHowl();}, 10750);
 }
 
 function FHdelay(){
-	if (FHtimer > 5)
-	{return;
+	if (FHtimer > 4) 
+	{
+		const warningFH = document.createElement("div");
+warningFH.style.fontWeight = 'bold';
+FHbar.appendChild(warningFH);
+warningFH.textContent = "Too Early! (wait under 5 seconds)";
+		stunfunction(1);
+setTimeout(function(){warningFH.remove();}, 1000);
+		return;
 	}
 FHtimer = 10;
 dialogue.textContent = "I've had enough of this!";
@@ -1004,6 +1011,7 @@ document.getElementById("newFH").remove();
 }
 }
 ans = 1;
+clearTimeout(FHrepeat);
 for(n=0; n <= guess.length; n++){
 if (guess[n] !== currentCombo[n]){
 ans = 0;
@@ -1431,6 +1439,7 @@ lifenumber.textContent = lnumber;
 
 
 </script>
+
 
 
 

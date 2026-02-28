@@ -147,6 +147,7 @@
 <button onclick="Healblockfunction(15)">Healblock test</button>
 <button onclick="stunfunction(15)">stun test</button>
 <button onclick="FatalHowl()">FH test</button>
+<button onclick="randomcombo()">Random Combo?</button>
 <div class="attackgui1">
 <p>Phase 1 attacks :</p>
 <left>
@@ -434,6 +435,26 @@ final();
 timer -= 10;
 document.getElementById("timer").textContent = timer/10;
 }
+////special gamemodes ///
+let randomcombos = 0;
+function randomcombos(){
+   if (randomcombos == 1){
+randomcombos = 0;
+const randommsg = document.createElement("div");
+FHbar.appendChild(randommsg);
+randommsg.textContent = "Random Combo: off";
+}
+   else if (randomcombos == 0){
+randomcombos = 1;
+randommsg.textContent = "Random Combo: on";
+}
+}
+
+
+
+
+
+
 
 /// special attacks ///
 function EvilFracture (test){
@@ -925,6 +946,11 @@ else if (phase == 5){
 }
 	}
 	const randomKey = Ckeys[Math.floor(Math.random() * Ckeys.length)];
+        if(randomcombo == 1){
+       let randomattack = [...attackbuttons];
+        for (i=0; i<comboname[randomKey].length){
+        comboname[randomKey][i] = randomattack[Math.floor(Math.random()*randomattack.length)];
+}
 	currentCombo = comboname[randomKey];
 		EveningShade();
 		EvilFracture();
@@ -1438,6 +1464,7 @@ lifenumber.textContent = lnumber;
 
 
 </script>
+
 
 
 

@@ -952,6 +952,7 @@ else if (phase == 5){
         let combosrandom = comboname;
         let randomattack = [...attackbuttons];
 	currentCombo = [...comboname[randomKey]];
+	/// random carn 'ai'
 if(randomcombo == 1){
 for (z=0; z<combosrandom[randomKey].length;z++){
         currentCombo[z] = randomattack[Math.floor(Math.random()*randomattack.length)];
@@ -959,7 +960,7 @@ for (z=0; z<combosrandom[randomKey].length;z++){
         if((currentCombo[z]=='DR')||(currentCombo[z]=='SV')||currentCombo[z]=='TR')
 {
 let potentialcombordm = ['SV', 'DR', 'DS', 'Decap', 'VV', 'WF'];
-for(rdmnext=0;rdmnext<=(Math.floor(Math.random()*4)+1);rdmnext++){
+for(rdmnext=0;rdmnext<=(Math.floor(Math.random()*currentCombo.length-z)+1);rdmnext++){
 z++;
 currentCombo[z] = potentialcombordm[Math.floor(Math.random()*potentialcombordm.length)]
 }
@@ -1507,6 +1508,7 @@ lifenumber.textContent = lnumber;
 
 
 </script>
+
 
 
 

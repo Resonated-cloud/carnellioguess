@@ -1349,7 +1349,7 @@ lifenumber.textContent = lnumber;
 bgmchange('songs/Foralltheuniverse.mp3', 0.25, 17.3);
 attackbuttons.push("BD", "Summon", "Mawaru", "Romeida");
 attackselection = [...attackbuttons];
-for(atks=1;atks<=attackbuttons.length;atks++){
+for(atks=1;atks<=Math.floor(attackbuttons.length/2);atks++){
 attackselection.push("Summon");
 	} 
 phasechange3 = "done";
@@ -1374,7 +1374,7 @@ healplayer(1);
 phasechange4 = "done";
 attackbuttons.push("SR", "EF", "DB", "ES");
 attackselection = [...attackbuttons];
-for(atks=1;atks<=attackbuttons.length;atks++){
+for(atks=1;atks<=Math.floor(attackbuttons.length/2);atks++){
 attackselection.push("Summon");
 	} 
 bgmchange('songs/Blooddraina.mp3', 0.25, 0);
@@ -1403,7 +1403,7 @@ healplayer(1);
 phasechange5 = "done";
 attackbuttons.push("NR", "FH", "DrinkardS");
 attackselection = [...attackbuttons];
-for(atks=1;atks<=attackbuttons.length;atks++){
+for(atks=1;atks<=Math.floor(attackbuttons.length/2);atks++){
 attackselection.push("Summon");
 	} 
 bgmchange('songs/Burningouttheblue.mp3', 0.25, 1);
@@ -1526,6 +1526,7 @@ lifenumber.textContent = lnumber;
 
 
 </script>
+
 
 
 

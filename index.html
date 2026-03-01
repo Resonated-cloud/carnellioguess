@@ -958,7 +958,7 @@ for (z=0; z<combosrandom[randomKey].length;z++){
 function rerolling(){
         currentCombo[z] = randomattack[Math.floor(Math.random()*randomattack.length)];
 ///check for common repetition
-        if((currentCombo[z]=='DR')||(currentCombo[z]=='SV')||currentCombo[z]=='TR')
+    if((currentCombo[z]=='DR')||(currentCombo[z]=='SV')||currentCombo[z]=='TR')
 {
 let potentialcombordm = ['SV', 'DR', 'DS', 'Decap', 'VV', 'WF'];
 for(rdmnext=0;rdmnext<=(Math.floor(Math.random()*currentCombo.length-z));rdmnext++){
@@ -968,20 +968,18 @@ currentCombo[z] = potentialcombordm[Math.floor(Math.random()*potentialcombordm.l
 //// if 
 }
 
-function summoncheck(){
 console.log("summon checked");
 if((currentCombo[z]=='Romeida')||(currentCombo[z]=='Mawaru')||(currentCombo[z]=='BD')||(currentCombo[z]=='DB')||(currentCombo[z]=='DrinkardS'
 )||(currentCombo[z]=='ES')||(currentCombo[z]=='NR')||(currentCombo[z]=='Redirect')||(currentCombo[z]=='EF')){
-if (summoncount==0){
+if (summoncount<1){
 rerolling();
 }
 if ((currentCombo[z]!=='Mawaru')||(currentCombo[z]!=='NR')||(currentCombo[z]!=='Redirect')||(currentCombo[z]!=='DB')){
 summoncount--;
 }
 }
-}
-summoncheck(); //activates first
 //check if summon is enough
+
 if (summoncount > 0 && z==Number(combosrandom[randomKey].length)-1){
 let countreducer = ['Romeida', 'EF', 'BD', 'DrinkardS', 'ES']
 currentCombo[z] = countreducer[Math.floor(Math.random()*countreducer.length)];
@@ -1512,6 +1510,7 @@ lifenumber.textContent = lnumber;
 
 
 </script>
+
 
 
 

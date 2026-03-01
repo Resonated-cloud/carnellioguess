@@ -147,7 +147,7 @@
 <button onclick="Healblockfunction(15)">Healblock test</button>
 <button onclick="stunfunction(15)">stun test</button>
 <button onclick="FatalHowl()">FH test</button>
-<button onclick="randomcombo()">Random Combo?</button>
+<button onclick="randomcombos()">Random Combo?</button>
 <div class="attackgui1">
 <p>Phase 1 attacks :</p>
 <left>
@@ -436,17 +436,20 @@ timer -= 10;
 document.getElementById("timer").textContent = timer/10;
 }
 ////special gamemodes ///
-let randomcombos = 0;
+let summoncount = 0;
+let randomcombo = 0;
 function randomcombos(){
-   if (randomcombos == 1){
-randomcombos = 0;
 const randommsg = document.createElement("div");
 FHbar.appendChild(randommsg);
+   if (randomcombo == 1){
+randomcombo = 0;
 randommsg.textContent = "Random Combo: off";
+return;
 }
-   else if (randomcombos == 0){
-randomcombos = 1;
+   else if (randomcombo == 0){
+randomcombo = 1;
 randommsg.textContent = "Random Combo: on";
+return;
 }
 }
 
@@ -946,12 +949,51 @@ else if (phase == 5){
 }
 	}
 	const randomKey = Ckeys[Math.floor(Math.random() * Ckeys.length)];
-        if(randomcombo == 1){
-       let randomattack = [...attackbuttons];
-        for (i=0; i<comboname[randomKey].length){
-        comboname[randomKey][i] = randomattack[Math.floor(Math.random()*randomattack.length)];
+        let combosrandom = comboname;
+        let randomattack = [...attackbuttons];
+	currentCombo = [...comboname[randomKey]];
+if(randomcombo == 1){
+for (z=0; z<combosrandom[randomKey].length;z++){
+        currentCombo[z] = randomattack[Math.floor(Math.random()*randomattack.length)];
+///check for common repetition
+        if((currentCombo[z]=='DR')||(currentCombo[z]=='SV')||currentCombo[z]=='TR')
+{
+let potentialcombordm = ['SV', 'DR', 'DS', 'Decap', 'VV', 'WF'];
+for(rdmnext=0;rdmnext<=(Math.floor(Math.random()*4)+1);rdmnext++){
+z++;
+currentCombo[z] = potentialcombordm[Math.floor(Math.random()*potentialcombordm.length)]
 }
-	currentCombo = comboname[randomKey];
+//// if 
+}
+function summoncheck(){
+console.log("summon checked");
+if((currentCombo[z]=='Romeida')||(currentCombo[z]=='Mawaru')||(currentCombo[z]=='BD')||(currentCombo[z]=='DB')||(currentCombo[z]=='DrinkardS'
+)||(currentCombo[z]=='ES')||(currentCombo[z]=='NR')||(currentCombo[z]=='Redirect')||(currentCombo[z]=='EF')){
+if (summoncount==0){
+currentCombo[z] = randomattack[Math.floor(Math.random()*randomattack.length)];
+summoncheck(); //reroll other attacks
+}
+if ((currentCombo[z]!=='Mawaru')||(currentCombo[z]!=='NR')||(currentCombo[z]!=='Redirect')||(currentCombo[z]!=='DB')){
+summoncount--;
+}
+}
+}
+summoncheck(); //activates first
+//check if summon is enough
+if (summoncount > 0 && z==Number(combosrandom[randomKey].length-1)){
+let countreducer = ['Romeida', 'EF', 'BD', 'DrinkardS', 'ES']
+currentCombo[z] = countreducer[Math.floor(Math.random()*countreducer.length)];
+} /// make sure summon has followup
+else if (currentCombo[z]=='Summon'){
+if(summoncount < 1){
+summoncount++;
+}
+//make sure summon doesnt go over 1
+}
+//add summon resource
+}
+/// loop
+}
 		EveningShade();
 		EvilFracture();
 	if (currentCombo.includes("EF")){
@@ -1147,13 +1189,15 @@ state = "stop"
 i = 0;
 function imgcombo(combo){
 const container = document.getElementById("imgattack");
+console.log(combo);
 var imageUrl;
-setTimeout(imgs(), 1000);
+setTimeout(imgs(combo), 1000);
 
-function imgs(){
+function imgs(combo){
 let atkname = combo[i];
 const newImg = document.createElement('img');
-if (i >= currentCombo.length){
+console.log(combo.length);
+if (i >= combo.length){
 i = 0;
 return;
 }
@@ -1245,7 +1289,6 @@ setTimeout(function(){imgcombo(combo)}, intervalP);
 }
 
 }
-
 }
 function backspace (){
 guess.pop()

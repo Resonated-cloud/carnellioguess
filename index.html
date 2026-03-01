@@ -955,24 +955,25 @@ else if (phase == 5){
 	/// random carn 'ai'
 if(randomcombo == 1){
 for (z=0; z<combosrandom[randomKey].length;z++){
+function rerolling(){
         currentCombo[z] = randomattack[Math.floor(Math.random()*randomattack.length)];
 ///check for common repetition
         if((currentCombo[z]=='DR')||(currentCombo[z]=='SV')||currentCombo[z]=='TR')
 {
 let potentialcombordm = ['SV', 'DR', 'DS', 'Decap', 'VV', 'WF'];
-for(rdmnext=0;rdmnext<=(Math.floor(Math.random()*currentCombo.length-z)+1);rdmnext++){
+for(rdmnext=0;rdmnext<=(Math.floor(Math.random()*currentCombo.length-z));rdmnext++){
 z++;
 currentCombo[z] = potentialcombordm[Math.floor(Math.random()*potentialcombordm.length)]
 }
 //// if 
 }
+
 function summoncheck(){
 console.log("summon checked");
 if((currentCombo[z]=='Romeida')||(currentCombo[z]=='Mawaru')||(currentCombo[z]=='BD')||(currentCombo[z]=='DB')||(currentCombo[z]=='DrinkardS'
 )||(currentCombo[z]=='ES')||(currentCombo[z]=='NR')||(currentCombo[z]=='Redirect')||(currentCombo[z]=='EF')){
 if (summoncount==0){
-currentCombo[z] = randomattack[Math.floor(Math.random()*randomattack.length)];
-summoncheck(); //reroll other attacks
+rerolling();
 }
 if ((currentCombo[z]!=='Mawaru')||(currentCombo[z]!=='NR')||(currentCombo[z]!=='Redirect')||(currentCombo[z]!=='DB')){
 summoncount--;
@@ -981,7 +982,7 @@ summoncount--;
 }
 summoncheck(); //activates first
 //check if summon is enough
-if (summoncount > 0 && z==Number(combosrandom[randomKey].length-1)){
+if (summoncount > 0 && z==Number(combosrandom[randomKey].length)-1){
 let countreducer = ['Romeida', 'EF', 'BD', 'DrinkardS', 'ES']
 currentCombo[z] = countreducer[Math.floor(Math.random()*countreducer.length)];
 } /// make sure summon has followup
@@ -989,10 +990,13 @@ else if (currentCombo[z]=='Summon'){
 if(summoncount < 1){
 summoncount++;
 }
+rerolling();
 //make sure summon doesnt go over 1
 }
 //add summon resource
 }
+	}
+rerolling();
 /// loop
 }
 		EveningShade();
@@ -1508,6 +1512,7 @@ lifenumber.textContent = lnumber;
 
 
 </script>
+
 
 
 

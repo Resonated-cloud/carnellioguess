@@ -517,6 +517,7 @@ counter = false;
 
 //Redirect Attack
   const attackbuttons = ["SS", "TR", "WF", "Decap", "VV"];
+let attackselection = [...attackbuttons];
 function redirect() {
 document.querySelectorAll(".attack").forEach((btn, i) => {
   btn.style.order = i;
@@ -950,7 +951,7 @@ else if (phase == 5){
 	}
 	const randomKey = Ckeys[Math.floor(Math.random() * Ckeys.length)];
         let combosrandom = comboname;
-        let randomattack = [...attackbuttons];
+        let randomattack = [...attackselection];
 	currentCombo = [...comboname[randomKey]];
 	/// random carn 'ai'
 if(randomcombo == 1){
@@ -1328,6 +1329,7 @@ lifenumber.textContent = lnumber;
 phasechange2 = "done";
 bgmchange('songs/Newworldorder.mp3', 0.25, 0);
 attackbuttons.push("SV", "DS", "SF", "DR");
+attackselection = [...attackbuttons];
 timerP = 120;
 intervalP = 500;
 dialogue.textContent = "Black Magic.";
@@ -1344,6 +1346,10 @@ healplayer(1);
 lifenumber.textContent = lnumber;
 bgmchange('songs/Foralltheuniverse.mp3', 0.25, 17.3);
 attackbuttons.push("BD", "Summon", "Mawaru", "Romeida");
+attackselection = [...attackbuttons];
+for(atks=1;atks<=attackbuttons.length;atks++){
+attackselection.push("Summon");
+	} 
 phasechange3 = "done";
 timerP = 160;
 intervalP = 200;
@@ -1365,6 +1371,10 @@ if (phase == 4){
 healplayer(1);
 phasechange4 = "done";
 attackbuttons.push("SR", "EF", "DB", "ES");
+attackselection = [...attackbuttons];
+for(atks=1;atks<=attackbuttons.length;atks++){
+attackselection.push("Summon");
+	} 
 bgmchange('songs/Blooddraina.mp3', 0.25, 0);
 timerP = 160;
 intervalP = 200;
@@ -1390,6 +1400,10 @@ if (phase == 5){
 healplayer(1);
 phasechange5 = "done";
 attackbuttons.push("NR", "FH", "DrinkardS");
+attackselection = [...attackbuttons];
+for(atks=1;atks<=attackbuttons.length;atks++){
+attackselection.push("Summon");
+	} 
 bgmchange('songs/Burningouttheblue.mp3', 0.25, 1);
 timerP = 400;
 intervalP = 200;
@@ -1510,6 +1524,7 @@ lifenumber.textContent = lnumber;
 
 
 </script>
+
 
 
 

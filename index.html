@@ -516,7 +516,7 @@ counter = false;
 }
 
 //Redirect Attack
-  const attackbuttons = ["SS", "TR", "WF", "Decap", "VV"];
+  const attackbuttons = ["SS", "TR", "WF", "Decap", "VV", "Dash", "Fakeout"];
 let attackselection = [...attackbuttons];
 function redirect() {
 document.querySelectorAll(".attack").forEach((btn, i) => {
@@ -899,20 +899,24 @@ else{
 }
 	
 function randomCombo() {
+let timermulti;
 let comboname;
 if (phase == 1){
 const keys = Object.keys(p1Combos); 
 	comboname = p1Combos;
+        timermulti = Number(75/10);
 }
 else if (phase == 2){
         comboname = p2Combos;
+        timermulti = 6;
 }
 else if (phase == 3){
         comboname = p3Combos;
+        timermulti = Number(375/100);
 }
 else if (phase == 4){
 	comboname = p4Combos;
-	timerP = 160;
+	timermulti = Number(275/100);
 	if (p4initial !== "done"){
 	timerP = 210;
 	comboname = p4Initials;
@@ -921,9 +925,9 @@ else if (phase == 4){
 }
 else if (phase == 5){
 	comboname = p5Combos;
-	timerP = 170;
+        timermulti = Number(25/10); //test further if this is too easy / not, also fix initial p5 time
 	if (p5initial !== "done"){
-	timerP = 410;
+        timerP = 410;
 	comboname = p5Initials;
 	p5initial = "done";
 	}
@@ -952,53 +956,68 @@ else if (phase == 5){
 	const randomKey = Ckeys[Math.floor(Math.random() * Ckeys.length)];
         let combosrandom = comboname;
         let randomattack = [...attackselection];
+        console.log(randomattack);
+        let randomcomboa = [];
 	currentCombo = [...comboname[randomKey]];
+        if (((p5initial !== "done" && p4initial == "done") || (p5initial == "done")) && funeralc !== 1){
+	timerP = Math.ceil(currentCombo.length*timermulti)*10;
+        }
 	/// random carn 'ai'
 if(randomcombo == 1){
-for (z=0; z<combosrandom[randomKey].length;z++){
-function rerolling(){
-        currentCombo[z] = randomattack[Math.floor(Math.random()*randomattack.length)];
-///check for common repetition
-    if((currentCombo[z]=='DR')||(currentCombo[z]=='SV')||currentCombo[z]=='TR')
-{
-let potentialcombordm = ['SV', 'DR', 'DS', 'Decap', 'VV', 'WF'];
-for(rdmnext=0;rdmnext<=(Math.floor(Math.random()*currentCombo.length-z));rdmnext++){
-z++;
-currentCombo[z] = potentialcombordm[Math.floor(Math.random()*potentialcombordm.length)]
-}
-//// if 
-}
+summoncount = 0;
+while (randomcomboa.length < currentCombo.length) {
+let attackr = randomattack[Math.floor(Math.random()*randomattack.length)];
 
-console.log("summon checked");
-if((currentCombo[z]=='Romeida')||(currentCombo[z]=='Mawaru')||(currentCombo[z]=='BD')||(currentCombo[z]=='DB')||(currentCombo[z]=='DrinkardS'
-)||(currentCombo[z]=='ES')||(currentCombo[z]=='NR')||(currentCombo[z]=='Redirect')||(currentCombo[z]=='EF')){
-if (summoncount<1){
-rerolling();
-}
-if ((currentCombo[z]!=='Mawaru')||(currentCombo[z]!=='NR')||(currentCombo[z]!=='Redirect')||(currentCombo[z]!=='DB')){
+if ((attackr == 'ES') || (attackr == 'Romeida') || (attackr == 'BD') || (attackr == 'Mawaru') || (attackr == 'DB') || (attackr == 'Redirect') || (attackr == 'EF') || (attackr == 'DrinkardS') || (attackr == 'NR')){
+if (summoncount > 0) {
+if ((attackr !== 'Redirect') && (attackr !== 'DB') && (attackr !== 'Mawaru') && (attackr !== 'NR')){
 summoncount--;
+// reduce summon
+}
+// is okay
+}
+else {
+continue;
 }
 }
-//check if summon is enough
-
-if (summoncount > 0 && z==Number(combosrandom[randomKey].length)-1){
-let countreducer = ['Romeida', 'EF', 'BD', 'DrinkardS', 'ES']
-currentCombo[z] = countreducer[Math.floor(Math.random()*countreducer.length)];
-} /// make sure summon has followup
-else if (currentCombo[z]=='Summon'){
-if(summoncount < 1){
+if (attackr == 'Summon' && summoncount == 1){
+continue;
+}
+else if (attackr == 'Summon' && summoncount == 0){
 summoncount++;
 }
-else{
-rerolling();
-	}
-//make sure summon doesnt go over 1
+if (randomcomboa[randomcomboa.length-1] == 'SV') {
+if (attackr !== 'DR' && attackr !== 'VV' && attackr !== 'ES' && attackr !== 'DS' && attackr !== 'DB' && attackr !== 'Decap' && attackr !== 'SF'){
+continue;
 }
-//add summon resource
+// make sure the combo make sense when he flies
 }
-	rerolling();
-	}
-/// loop
+if (randomcomboa.length == currentCombo.length - 1){
+console.log("Summon : " + summoncount);
+if (summoncount == 1){
+const reducers = ['Romeida', 'BD', 'EF', 'ES', 'DrinkardS']
+const avreducer = [];
+for (z = 0; z < reducers.length; z++){
+if (attackselection.includes(reducers[z])){
+avreducer.push(reducers[z]);
+}
+}
+attackr = avreducer[Math.floor(Math.random()*avreducer.length)];
+summoncount--;
+} else if (attackr == 'Summon'){
+continue;
+}
+
+}
+if ((randomcomboa[randomcomboa.length-1] == 'Summon') && (attackr == 'TR')){
+continue;
+}
+
+randomcomboa.push(attackr);
+if (randomcomboa.length == currentCombo.length){
+currentCombo = [...randomcomboa];
+}
+}
 }
 		EveningShade();
 		EvilFracture();
@@ -1347,9 +1366,9 @@ if (phase == 3){
 healplayer(1);
 lifenumber.textContent = lnumber;
 bgmchange('songs/Foralltheuniverse.mp3', 0.25, 17.3);
-attackbuttons.push("BD", "Summon", "Mawaru", "Romeida");
+attackbuttons.push("BD", "Summon", "Mawaru", "Romeida", "Redirect");
 attackselection = [...attackbuttons];
-for(atks=1;atks<=Math.floor(attackbuttons.length/2);atks++){
+for(atks=1;atks<=Math.floor(attackbuttons.length/5);atks++){
 attackselection.push("Summon");
 	} 
 phasechange3 = "done";
@@ -1374,7 +1393,7 @@ healplayer(1);
 phasechange4 = "done";
 attackbuttons.push("SR", "EF", "DB", "ES");
 attackselection = [...attackbuttons];
-for(atks=1;atks<=Math.floor(attackbuttons.length/2);atks++){
+for(atks=1;atks<=Math.floor((attackbuttons.length-6)/5);atks++){
 attackselection.push("Summon");
 	} 
 bgmchange('songs/Blooddraina.mp3', 0.25, 0);
@@ -1403,8 +1422,12 @@ healplayer(1);
 phasechange5 = "done";
 attackbuttons.push("NR", "FH", "DrinkardS");
 attackselection = [...attackbuttons];
-for(atks=1;atks<=Math.floor(attackbuttons.length/2);atks++){
+for(let atks=1;atks<=Math.floor((attackbuttons.length-9)/5);atks++){
 attackselection.push("Summon");
+	} 
+for(let nrfh=1;nrfh<=1;nrfh++){
+attackselection.push("NR");
+attackselection.push("FH");
 	} 
 bgmchange('songs/Burningouttheblue.mp3', 0.25, 1);
 timerP = 400;
@@ -1526,6 +1549,7 @@ lifenumber.textContent = lnumber;
 
 
 </script>
+
 
 
 
